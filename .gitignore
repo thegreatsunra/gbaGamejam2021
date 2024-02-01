@@ -1,5 +1,7 @@
+# Start of upstream
 build
 *.gba
 *.elf
 *.sav
 *.elfbin
+# end of upstream
