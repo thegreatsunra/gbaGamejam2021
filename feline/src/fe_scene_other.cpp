@@ -20,8 +20,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
 
 
 #include "bn_blending_actions.h"
@@ -95,7 +93,6 @@ namespace fe
 
         // _player
         _player->spawn(spawn_location, camera, map, enemies);
-        _player->set_healthbar_visibility(true);
         while(true)
         {
             
@@ -143,16 +140,8 @@ namespace fe
                 return Scene::OTHER;
             }
 
-            if(_player->hp() < 1){
-                _player->delete_data();
-                return Scene::DEATH;
-            }
-            // BN_LOG(_player->hp());
-
-
             if(_player->pos().y() == 152 && _player->pos().x() > 870){
                 if(enemy_count < 1){
-                    _player->set_healthbar_visibility(false);
                     scale_action = bn::sprite_scale_to_action(glow, 60, 2);
                     map.set_blending_enabled(true);
                     bg.set_blending_enabled(true);

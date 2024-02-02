@@ -20,8 +20,6 @@
 #include "fe_player.h"
 #include "fe_scene.h"
 #include "fe_tooltip.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
 
 //assets
 #include "bn_sprite_items_cat_sprite.h"
@@ -49,13 +47,6 @@ namespace fe
         bn::music_items::piana.play();
         bn::music::set_volume(0.6);
 
-        //NPC
-        NPC penguin = NPC(bn::fixed_point(231, 376), camera, NPC_TYPE::PENGUIN2, text_generator);
-        NPC jeremy = NPC(bn::fixed_point(880, 208), camera, NPC_TYPE::JEREMY, text_generator);
-        NPC tortoise = NPC(bn::fixed_point(150, 264), camera, NPC_TYPE::TORTOISE2, text_generator);
-        NPC frog = NPC(bn::fixed_point(600, 616), camera, NPC_TYPE::FROG, text_generator);
-        Tooltip explain_telejump = Tooltip(bn::fixed_point(385, 580),"Tap 'A' in the air to telejump", text_generator);
-
         // map
         bn::affine_bg_ptr map = bn::affine_bg_items::cliffs2.create_bg(512, 512);
         bn::regular_bg_ptr map_bg = bn::regular_bg_items::cliffs_bg.create_bg(512, 512);
@@ -75,7 +66,6 @@ namespace fe
         // _player
         _player->spawn(spawn_location, camera, map, enemies);
         _player->set_can_teleport(true);
-        _player->set_healthbar_visibility(true);
         while(true)
         {
             
@@ -159,7 +149,6 @@ namespace fe
             }
 
             if(jeremy.finished_talking()){
-                _player->set_hp(9);
                 if(_player->pos().x() > 800 &&  _player->pos().x() < 830  && _player->pos().y() == 136){
                     _player->delete_data();
                     return Scene::LAB;

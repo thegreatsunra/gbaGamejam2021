@@ -25,9 +25,7 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
 #include "fe_tooltip.h"
-#include "fe_npc_type.h"
 #include "fe_enemy.h"
 #include "fe_enemy_type.h"
 #include "fe_data.h"
@@ -102,14 +100,8 @@ namespace fe
 
         //player
         _player->spawn(spawn_location, camera, map, enemies);
-        _player->set_healthbar_visibility(true);
         _player->set_can_teleport(true);
 
-        // //NPC
-        NPC tablet = NPC(bn::fixed_point(300, 872), camera, NPC_TYPE::TABLET, text_generator);
-        NPC cage = NPC(bn::fixed_point(254, 208), camera, NPC_TYPE::CAGE, text_generator);
-        Tooltip explain_teleport = Tooltip(bn::fixed_point(420, 880),"Tap 'L' to Teleport", text_generator);
-        
         // bn::vector<StorySave, 4> saves = {};
         // saves.push_back(StorySave(bn::fixed_point(323, 232), STORY_TYPE::FIRST, camera, text_generator));
         // saves.push_back(StorySave(bn::fixed_point(913, 488), STORY_TYPE::SECOND, camera, text_generator));
@@ -154,29 +146,6 @@ namespace fe
             else {
                 _player->set_listening(false);
             }
-            // else if(explain_wallrun.check_trigger(player.pos())){
-            //     player.set_listening(true);
-            //     explain_wallrun.update();
-            // }
-            // else {
-            //     player.set_listening(false);
-            // }
-
-            // for(StorySave& save : saves){
-                
-            //     if(save.check_trigger(player.pos()) && bn::keypad::up_pressed()){
-            //         vines.reset();
-            //         player.set_healthbar_visibility(false);
-            //         save.execute_scene();
-            //         vines = bn::regular_bg_items::vines.create_bg(0, 0);
-            //         player.set_healthbar_visibility(true);
-            //         vines.value().set_priority(0);
-            //         vines.value().set_camera(camera);
-            //     }
-            //     if(bn::abs(save.pos().x() - camera.x()) < 200 && bn::abs(save.pos().y() - camera.y()) < 100){
-            //         save.update();
-            //     }
-            // }
             tablet.update();
             cage.update();
 
@@ -198,11 +167,6 @@ namespace fe
                 _player->set_listening(false);
                 _player->delete_data();
                 return Scene::RETURN_SKY;
-            }
-
-            if(_player->hp() < 1){
-                _player->delete_data();
-                return Scene::DEATH;
             }
             
             // BN_PROFILER_RESET();

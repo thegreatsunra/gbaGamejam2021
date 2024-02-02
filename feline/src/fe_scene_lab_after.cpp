@@ -20,9 +20,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
-
 
 #include "bn_blending_actions.h"
 #include "bn_sprite_actions.h"
@@ -82,14 +79,11 @@ namespace fe
         
         // bn::fixed max_cpu_usage;
         // int counter = 1;
-        NPC fam = NPC(bn::fixed_point(543, 696), camera, NPC_TYPE::FAM, text_generator);
-
 
         bn::vector<Enemy, 16> enemies = {};
       
         // _player
         _player->spawn(spawn_location, camera, map, enemies);
-        _player->set_healthbar_visibility(true);
         _player->set_can_teleport(true);
 
         

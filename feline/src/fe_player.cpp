@@ -91,7 +91,6 @@ namespace fe
         _text_bg1(bn::sprite_items::text_bg.create_sprite(0, 0)),
         _text_bg2(bn::sprite_items::text_bg.create_sprite(0, 0)),
         _skip(bn::sprite_items::skip.create_sprite(0, 0)),
-        _healthbar(fe::Healthbar()),
         _data(fe::Data()),
         _tele_sprite(bn::sprite_items::cat_sprite.create_sprite(0, 0))
     {
@@ -102,9 +101,6 @@ namespace fe
         _tele_sprite.put_above();
         _tele_sprite.set_item(bn::sprite_items::cat_sprite, 16);
         _tele_sprite.set_visible(false);
-        
-
-        _healthbar.set_visible(false);
 
         _text_bg1.set_scale(2);
         _text_bg1.set_bg_priority(0);
@@ -123,18 +119,6 @@ namespace fe
         _can_teleport = can_teleport;
     }
 
-    void Player::set_hp(int hp){
-        _healthbar.set_hp(hp);
-    }
-
-    int Player::hp(){
-        return _healthbar.hp();
-    }
-
-    void Player::set_healthbar_visibility(bool is_visible){
-        _healthbar.set_visible(is_visible);
-    }
-
     void Player::spawn(bn::fixed_point pos, bn::camera_ptr camera, bn::affine_bg_ptr map, bn::vector<Enemy,16>& enemies){
         _pos = pos;
         _camera = camera;
@@ -143,7 +127,6 @@ namespace fe
         _enemies = &enemies;
         _map.value().set_visible(true);
         _sprite.set_visible(true);
-        _healthbar.set_visible(false);
         reset();
     }
 
@@ -201,11 +184,10 @@ namespace fe
             if(_grounded && !_listening){
                 _dy-= jump_power;
                 _grounded = false;
-            } else if(_can_teleport && _healthbar.is_glow_ready()){
+            } else if(_can_teleport){
                 _tele_sprite.set_position(_pos);
                 _tele_sprite.set_visible(true);
                 _tele_sprite.set_horizontal_flip(!is_right());
-                _healthbar.activate_glow();
                 bn::sound_items::teleport.play();
                 int dist_up = 80;
                 _dy = -1;
@@ -273,7 +255,6 @@ namespace fe
             {
                 if(!_invulnerable && _enemies.value()->at(i).hp() > 0 && _enemies.value()->at(i).type() != ENEMY_TYPE::RAT){
                     _invulnerable = true;
-                    _healthbar.set_hp(_healthbar.hp() - 1);
                     _dy -= 0.3;
                     if(_dx < 0){
                         _dx += 6;
@@ -332,7 +313,6 @@ namespace fe
 
     void Player::hide(){
         _tele_sprite.set_visible(false);
-        _healthbar.set_visible(false);
         _sprite.set_visible(false);
     }
 
@@ -465,12 +445,11 @@ namespace fe
         // teleport
         if(bn::keypad::l_pressed() && !_listening)
         {
-            if(_can_teleport && _healthbar.is_glow_ready()){
+            if(_can_teleport){
                 // BN_LOG(_tele_sprite.position().x());
                 _tele_sprite.set_position(_pos);
                 _tele_sprite.set_visible(true);
                 _tele_sprite.set_horizontal_flip(!is_right());
-                _healthbar.activate_glow();
                 bn::sound_items::teleport.play();
                 int dist_to_wall = 80;
                 if(is_right()){
@@ -490,7 +469,6 @@ namespace fe
                 }
             }
         } 
-        _healthbar.update();
 
         check_attack();
 

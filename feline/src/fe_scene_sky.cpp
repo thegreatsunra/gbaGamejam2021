@@ -19,8 +19,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
 
 //assets
 #include "bn_sprite_items_cat_sprite.h"
@@ -47,9 +45,6 @@ namespace fe
 
         bn::music_items::piana.play();
         bn::music::set_volume(0.6);
-
-        //NPC
-        NPC penguin = NPC(bn::fixed_point(231, 376), camera, NPC_TYPE::PENGUIN, text_generator);
 
         // map
         bn::affine_bg_ptr map = bn::affine_bg_items::cliffs.create_bg(512, 512);

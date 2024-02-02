@@ -41,7 +41,6 @@ namespace fe
         // bn::affine_bg_ptr map = bn::affine_bg_items::title.create_bg(0, 0);
         //reset player
         _player->set_can_teleport(false);
-        _player->set_hp(9);
 
         bn::music_items::mystic.play();
 

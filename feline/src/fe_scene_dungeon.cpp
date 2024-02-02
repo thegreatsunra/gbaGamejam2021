@@ -25,9 +25,7 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
 #include "fe_tooltip.h"
-#include "fe_npc_type.h"
 #include "fe_enemy.h"
 #include "fe_enemy_type.h"
 #include "fe_data.h"
@@ -116,11 +114,6 @@ namespace fe
 
         //_player
         _player->spawn(spawn_location, camera, map, enemies);
-        _player->set_healthbar_visibility(true);
-
-        //NPC
-        NPC golem = NPC(bn::fixed_point(155, 704), camera, NPC_TYPE::GOLEM, text_generator);
-        Tooltip explain_attack = Tooltip(bn::fixed_point(243, 160),"Press 'B' to Attack", text_generator);
 
         bn::vector<StorySave, 4> saves = {};
         saves.push_back(StorySave(bn::fixed_point(323, 232), STORY_TYPE::FIRST, camera, text_generator));
@@ -140,13 +133,6 @@ namespace fe
             //     max_cpu_usage = 0;
             //     counter = 60;
             // }
-
-            
-            if(_player->hp() <= 0){
-                _player->delete_data();
-                return Scene::DEATH;
-            }
-            
 
             if(golem.check_trigger(_player->pos()))
             {
@@ -169,10 +155,8 @@ namespace fe
                 
                 if(save.check_trigger(_player->pos()) && bn::keypad::up_pressed()){
                     vines.reset();
-                    _player->set_healthbar_visibility(false);
                     save.execute_scene();
                     vines = bn::regular_bg_items::vines.create_bg(0, 0);
-                    _player->set_healthbar_visibility(true);
                     vines.value().set_priority(0);
                     vines.value().set_camera(camera);
                 }
@@ -209,7 +193,6 @@ namespace fe
             }
             
             if(_player->pos().y() == 944 && _player->pos().x() > 790){
-                _player->set_healthbar_visibility(false);
                 scale_action = bn::sprite_scale_to_action(glow, 60, 2);
                 map.set_blending_enabled(true);
                 map_bg.set_blending_enabled(true);
@@ -236,8 +219,6 @@ namespace fe
                     }
                 }
             }
-            
-            // BN_LOG(_player->hp());
             
             // BN_PROFILER_RESET();
             bn::core::update();

@@ -20,9 +20,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
-
 
 #include "bn_blending_actions.h"
 #include "bn_sprite_actions.h"
@@ -103,17 +100,8 @@ namespace fe
         // enemies.push_back(Enemy(292, 288, camera, map, ENEMY_TYPE::BOSS, 5));
         // enemies.push_back(Enemy(337, 104, camera, map, ENEMY_TYPE::BOSS, 5));
 
-        NPC girls = NPC(bn::fixed_point(744, 472), camera, NPC_TYPE::GIRLS, text_generator);
-        NPC lab_pc = NPC(bn::fixed_point(372, 136), camera, NPC_TYPE::LAB_PC, text_generator);
-        NPC computerstuff = NPC(bn::fixed_point(326, 296), camera, NPC_TYPE::COMPUTER_STUFF, text_generator);
-        NPC potion = NPC(bn::fixed_point(481, 494), camera, NPC_TYPE::POTION, text_generator);
-        NPC pewpew = NPC(bn::fixed_point(859, 437), camera, NPC_TYPE::PEWPEW, text_generator);
-        NPC mutant_npc = NPC(bn::fixed_point(581, 683), camera, NPC_TYPE::MUTANT, text_generator);
-        Tooltip explain_sneak = Tooltip(bn::fixed_point(143, 400),"Don't let the lab rats see you.", text_generator);
-
         // _player
         _player->spawn(spawn_location, camera, map, enemies);
-        _player->set_healthbar_visibility(true);
         _player->set_can_teleport(true);
 
         bool detected = false;
@@ -204,14 +192,6 @@ namespace fe
                 }else if(!pewpew.is_talking()){
                     _player->set_listening(false);
                 }
-            }  else if(mutant_npc.check_trigger(_player->pos()))
-            {
-                if(bn::keypad::up_pressed()){
-                    _player->set_listening(true);
-                    mutant_npc.talk();
-                }else if(!mutant_npc.is_talking()){
-                    _player->set_listening(false);
-                }
             } 
             else if(explain_sneak.check_trigger(_player->pos())){
                 _player->set_listening(true);
@@ -226,17 +206,6 @@ namespace fe
             computerstuff.update();
             potion.update();
             pewpew.update();
-            
-
-            if(mutant_npc.finished_talking()){
-                _player->set_listening(false);
-                if(!mutant_npc.hidden()){
-                    mutant_npc.set_is_hidden(true);
-                    mutant.set_pos(bn::fixed_point(581, 683));
-                }
-            }else {
-                mutant_npc.update();
-            }
 
             if(transparency_action.has_value() && !transparency_action.value().done()){
                 transparency_action.value().update();
@@ -258,41 +227,6 @@ namespace fe
                 return Scene::LAB_AFTER;
             }
 
-            if(_player->hp() < 1){
-                _player->delete_data();
-                return Scene::DEATH;
-            }
-            // // BN_LOG(_player->hp());
-
-
-            // if(_player->pos().y() == 152 && _player->pos().x() > 870){
-            //     if(enemy_count < 1){
-            //         _player->set_healthbar_visibility(false);
-            //         scale_action = bn::sprite_scale_to_action(glow, 60, 2);
-            //         map.set_blending_enabled(true);
-            //         bg.set_blending_enabled(true);
-            //         glow.set_blending_enabled(true);
-            //         intensity_action = bn::blending_fade_alpha_to_action(60, 1);
-            //     }
-            // }
-
-            // if(scale_action.has_value()){
-            //     if(!scale_action.value().done()){
-            //         scale_action.value().update();
-            //     } 
-            // }
-
-            // if(intensity_action.has_value()){
-            //     if(!intensity_action.value().done()){
-            //         intensity_action.value().update();
-            //         kill_timer++;
-            //         if(kill_timer > 60){
-            //             _player->delete_data();
-            //             return Scene::OTHER_DUNGEON;
-            //         }
-            //     }
-            // }
-            
             bn::core::update();
         }
     }
