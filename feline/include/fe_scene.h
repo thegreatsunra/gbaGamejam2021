@@ -15,13 +15,10 @@ namespace fe
         OTHER_DUNGEON,
         INTRO,
         GBA,
-        BUTANO,
-        DEATH,
         LOADING,
         TITLE,
         LAB,
         LAB_AFTER,
-        END
     };
 }
 

@@ -31,7 +31,7 @@
 #include "bn_music_items.h"
 
 #include "bn_sprite_text_generator.h"
-#include "variable_8x8_sprite_font.h"
+// #include "variable_8x8_sprite_font.h"
 
 namespace fe
 {
@@ -40,14 +40,8 @@ Scene GBA::execute()
 {
 
     bn::regular_bg_ptr map = bn::regular_bg_items::splash.create_bg(0 , 0);
-    int timer = 0;
     while(true)
     {
-        if(timer > 180){
-            return Scene::BUTANO;
-        }
-        
-        ++timer;
         bn::core::update();
     }   
 }

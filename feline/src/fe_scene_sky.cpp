@@ -26,7 +26,6 @@
 #include "bn_regular_bg_items_cliffs_bg.h"
 
 #include "bn_sprite_text_generator.h"
-#include "variable_8x8_sprite_font.h"
 
 #include "bn_music_items.h"
 #include "bn_music_actions.h"
@@ -40,8 +39,6 @@ namespace fe
     Scene Sky::execute(bn::fixed_point spawn_location)
     {
         bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
-
-        bn::sprite_text_generator text_generator(variable_8x8_sprite_font);
 
         bn::music_items::piana.play();
         bn::music::set_volume(0.6);
@@ -75,17 +72,6 @@ namespace fe
             //     max_cpu_usage = 0;
             //     counter = 60;
             // }
-
-            if(penguin.check_trigger(_player->pos()))
-            {
-                if(bn::keypad::up_pressed()){
-                    _player->set_listening(true);
-                    penguin.talk();
-                }else if(!penguin.is_talking()){
-                    _player->set_listening(false);
-                }
-            }
-            penguin.update();
 
             map_bg.set_x(map_bg.x() + 0.3);
 
