@@ -19,8 +19,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
 
 //assets
 #include "bn_sprite_items_cat_sprite.h"
@@ -28,7 +26,6 @@
 #include "bn_regular_bg_items_cliffs_bg.h"
 
 #include "bn_sprite_text_generator.h"
-#include "variable_8x8_sprite_font.h"
 
 #include "bn_music_items.h"
 #include "bn_music_actions.h"
@@ -43,13 +40,8 @@ namespace fe
     {
         bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
-        bn::sprite_text_generator text_generator(variable_8x8_sprite_font);
-
         bn::music_items::piana.play();
         bn::music::set_volume(0.6);
-
-        //NPC
-        NPC penguin = NPC(bn::fixed_point(231, 376), camera, NPC_TYPE::PENGUIN, text_generator);
 
         // map
         bn::affine_bg_ptr map = bn::affine_bg_items::cliffs.create_bg(512, 512);
@@ -80,17 +72,6 @@ namespace fe
             //     max_cpu_usage = 0;
             //     counter = 60;
             // }
-
-            if(penguin.check_trigger(_player->pos()))
-            {
-                if(bn::keypad::up_pressed()){
-                    _player->set_listening(true);
-                    penguin.talk();
-                }else if(!penguin.is_talking()){
-                    _player->set_listening(false);
-                }
-            }
-            penguin.update();
 
             map_bg.set_x(map_bg.x() + 0.3);
 

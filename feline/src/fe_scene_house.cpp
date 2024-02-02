@@ -19,8 +19,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
 #include "fe_tooltip.h"
 
 //assets
@@ -30,7 +28,6 @@
 #include "bn_regular_bg_items_house_bg.h"
 
 #include "bn_sprite_text_generator.h"
-#include "variable_8x8_sprite_font.h"
 #include "bn_music_items.h"
 #include "bn_music_actions.h"
 
@@ -41,16 +38,10 @@ namespace fe
 
     Scene House::execute(bn::fixed_point spawn_location)
     {
-        bn::sprite_text_generator text_generator(variable_8x8_sprite_font);
-
         bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
         bn::music_items::piana.play();
         bn::music::set_volume(0.7);
-
-        //NPC
-        NPC tortoise = NPC(bn::fixed_point(380, 376), camera, NPC_TYPE::TORTOISE, text_generator);
-        // Tooltip explain_attack = Tooltip(bn::fixed_point(440, 304),"Press 'B' to Attack", text_generator);
 
         // map
         bn::regular_bg_ptr map_bg = bn::regular_bg_items::house_bg.create_bg(512, 512);
@@ -81,19 +72,6 @@ namespace fe
             //     counter = 60;
             // }
 
-            if(tortoise.check_trigger(_player->pos()))
-            {
-                if(bn::keypad::up_pressed()){
-                    _player->set_listening(true);
-                    tortoise.talk();
-                }else if(!tortoise.is_talking()){
-                    _player->set_listening(false);
-                }
-            } else {
-                _player->set_listening(false);
-            }
-
-            tortoise.update();
             // explain_attack.update();
 
             //elevator.update_position();

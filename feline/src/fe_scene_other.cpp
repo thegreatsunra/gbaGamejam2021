@@ -20,8 +20,6 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_npc.h"
-#include "fe_npc_type.h"
 
 
 #include "bn_blending_actions.h"
@@ -37,7 +35,6 @@
 #include "bn_sprite_items_glow.h"
 
 #include "bn_sprite_text_generator.h"
-#include "variable_8x8_sprite_font.h"
 
 #include "fe_tooltip.h"
 
@@ -53,7 +50,6 @@ namespace fe
     {
         bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
-        bn::sprite_text_generator text_generator(variable_8x8_sprite_font);
         bn::music_items::sanctuary.play();
         bn::music::set_volume(0.8);
 
@@ -91,11 +87,8 @@ namespace fe
         enemies.push_back(Enemy(292, 288, camera, map, ENEMY_TYPE::BOSS, 5));
         enemies.push_back(Enemy(337, 104, camera, map, ENEMY_TYPE::BOSS, 5));
 
-        Tooltip explain_kill = Tooltip(bn::fixed_point(903, 144),"Kill all the enemies.", text_generator);
-
         // _player
         _player->spawn(spawn_location, camera, map, enemies);
-        _player->set_healthbar_visibility(true);
         while(true)
         {
             
@@ -115,13 +108,7 @@ namespace fe
                 }
             }
             if(enemy_count > 0){
-                if(explain_kill.check_trigger(_player->pos())){
-                    _player->set_listening(true);
-                    explain_kill.update();
-                }
-                else {
-                    _player->set_listening(false);
-                }
+                _player->set_listening(false);
             }
             
 
@@ -143,16 +130,8 @@ namespace fe
                 return Scene::OTHER;
             }
 
-            if(_player->hp() < 1){
-                _player->delete_data();
-                return Scene::DEATH;
-            }
-            // BN_LOG(_player->hp());
-
-
             if(_player->pos().y() == 152 && _player->pos().x() > 870){
                 if(enemy_count < 1){
-                    _player->set_healthbar_visibility(false);
                     scale_action = bn::sprite_scale_to_action(glow, 60, 2);
                     map.set_blending_enabled(true);
                     bg.set_blending_enabled(true);
