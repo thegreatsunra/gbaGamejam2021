@@ -36,7 +36,7 @@
 int main()
 {
     bn::core::init();
-    fe::Scene scene = fe::Scene::GBA;
+    fe::Scene scene = fe::Scene::HOUSE_START;
 
     bn::sprite_ptr cat_sprite = bn::sprite_items::cat_sprite.create_sprite(0,0);
     cat_sprite.set_visible(false);
