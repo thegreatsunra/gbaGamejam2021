@@ -52,6 +52,9 @@ int main()
     {
         if(scene == fe::Scene::HOUSE_START){
             fe::House house = fe::House(player);
+            // lower value for left (,) value moves left
+            // lower value for right (,) value moves up
+            // so it's (x,y) with top-left corner being 0
             scene = house.execute(bn::fixed_point(293, 368));
         } 
         else if(scene == fe::Scene::HOUSE_SKY){
