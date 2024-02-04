@@ -21,6 +21,8 @@
 #include "fe_player.h"
 #include "fe_scene.h"
 // #include "fe_tooltip.h"
+#include "fe_enemy.h"
+#include "fe_enemy_type.h"
 
 //assets
 #include "bn_sprite_items_cat_sprite.h"
@@ -57,7 +59,14 @@ namespace fe
 
         // bn::fixed max_cpu_usage;
         // int counter = 1;
+
+        //Enemies
         bn::vector<Enemy, 16> enemies = {};
+        enemies.push_back(Enemy(290, 169, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(750, 480, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(711, 224, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(412, 440, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(337, 792, camera, map, ENEMY_TYPE::SLIME, 2));
 
         // player
         _player->spawn(spawn_location, camera, map, enemies);
@@ -89,7 +98,14 @@ namespace fe
                     }
                 }
             }
-            
+
+            for(Enemy& enemy : enemies){
+                if(bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100){
+                    enemy.update(_player->pos());
+                } else {
+                    enemy.set_visible(false);
+                }
+            }
             
             bn::core::update();
         }
