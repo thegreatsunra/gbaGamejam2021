@@ -62,11 +62,11 @@ namespace fe
 
         //Enemies
         bn::vector<Enemy, 16> enemies = {};
-        enemies.push_back(Enemy(290, 169, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(750, 480, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(711, 224, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(412, 440, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(337, 792, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(400, 500, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(500, 500, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(600, 500, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(700, 500, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(800, 500, camera, map, ENEMY_TYPE::SLIME, 2));
 
         // player
         _player->spawn(spawn_location, camera, map, enemies);
