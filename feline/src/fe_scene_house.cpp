@@ -19,17 +19,17 @@
 #include "fe_level.h"
 #include "fe_player.h"
 #include "fe_scene.h"
-#include "fe_tooltip.h"
+// #include "fe_tooltip.h"
 
 //assets
 #include "bn_sprite_items_cat_sprite.h"
-#include "bn_sprite_items_box.h"
+// #include "bn_sprite_items_box.h"
 #include "bn_affine_bg_items_house_2x.h"
-#include "bn_regular_bg_items_house_bg.h"
+// #include "bn_regular_bg_items_house_bg.h"
 
-#include "bn_sprite_text_generator.h"
-#include "bn_music_items.h"
-#include "bn_music_actions.h"
+// #include "bn_sprite_text_generator.h"
+// #include "bn_music_items.h"
+// #include "bn_music_actions.h"
 
 namespace fe
 {
@@ -40,19 +40,19 @@ namespace fe
     {
         bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
-        bn::music_items::piana.play();
-        bn::music::set_volume(0.7);
+        // bn::music_items::piana.play();
+        // bn::music::set_volume(0.7);
 
         // map
-        bn::regular_bg_ptr map_bg = bn::regular_bg_items::house_bg.create_bg(512, 512);
+        // bn::regular_bg_ptr map_bg = bn::regular_bg_items::house_bg.create_bg(512, 512);
         bn::affine_bg_ptr map = bn::affine_bg_items::house_2x.create_bg(512, 512);
-        map_bg.set_priority(2);
+        // map_bg.set_priority(2);
         map.set_priority(1);
         fe::Level level = fe::Level(map);
 
         // camera
         map.set_camera(camera);
-        map_bg.set_camera(camera);
+        // map_bg.set_camera(camera);
 
         // bn::fixed max_cpu_usage;
         // int counter = 1;
