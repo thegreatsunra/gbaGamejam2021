@@ -89,15 +89,15 @@ namespace fe
             _player->apply_animation_state();
             // BN_LOG(bn::to_string<32>(_player->pos().x())+" " + bn::to_string<32>(_player->pos().y()));
             
-            if(bn::keypad::up_pressed())
-            {
-                if(_player->pos().x() < 570 && _player->pos().x() > 540){
-                    if(_player->pos().y() < 400 && _player->pos().y() > 360){
-                        _player->delete_data();
-                        return Scene::HOUSE_SKY;
-                    }
-                }
-            }
+            // if(bn::keypad::up_pressed())
+            // {
+            //     if(_player->pos().x() < 570 && _player->pos().x() > 540){
+            //         if(_player->pos().y() < 400 && _player->pos().y() > 360){
+            //             _player->delete_data();
+            //             return Scene::HOUSE_SKY;
+            //         }
+            //     }
+            // }
 
             for(Enemy& enemy : enemies){
                 if(bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100){
