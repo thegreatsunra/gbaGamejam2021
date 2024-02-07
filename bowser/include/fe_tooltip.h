@@ -23,13 +23,13 @@ namespace fe
             bn::fixed_point _pos;
             bool _is_talking = false;
             bool _finished = false;
+            bn::string_view _line;
             bn::sprite_text_generator& _text_generator;
             const bn::fixed _text_y_inc = 14;
             const bn::fixed _text_y_limit = (bn::display::height() / 2) - _text_y_inc;
             bn::vector<bn::sprite_ptr, 32> _text_sprites;
 
 
-            bn::string_view _line;
             int _currentChar = 0;
             bn::string_view _currentChars = "";
 
