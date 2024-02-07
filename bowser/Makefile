@@ -25,7 +25,7 @@ INCLUDES    :=  include
 DATA        :=
 GRAPHICS    :=  graphics
 AUDIO       :=  audio
-ROMTITLE    :=  feline
+ROMTITLE    :=  bowser
 ROMCODE     :=  SBTP
 USERFLAGS   :=
 

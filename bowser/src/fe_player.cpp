@@ -11,7 +11,7 @@
 #include "bn_span.h"
 #include "bn_log.h"
 
-#include "bn_sprite_items_cat_sprite.h"
+#include "bn_sprite_items_bowser_sprite.h"
 #include "bn_sprite_items_text_bg.h"
 #include "bn_sprite_items_skip.h"
 #include "bn_sprite_items_spin_glow.h"
@@ -24,7 +24,7 @@
 #include "fe_enemy.h"
 #include "fe_enemy_type.h"
 
-#include "bn_affine_bg_items_house.h"
+#include "bn_affine_bg_items_path.h"
 #include "bn_sound_items.h"
 
 
@@ -87,19 +87,19 @@ namespace fe
     Player::Player(bn::sprite_ptr sprite) :
         _sprite(sprite),
         _camera(bn::camera_ptr::create(0,0)),
-        _map(bn::affine_bg_items::house.create_bg(0, 0)),
+        _map(bn::affine_bg_items::path.create_bg(0, 0)),
         _text_bg1(bn::sprite_items::text_bg.create_sprite(0, 0)),
         _text_bg2(bn::sprite_items::text_bg.create_sprite(0, 0)),
         _skip(bn::sprite_items::skip.create_sprite(0, 0)),
         _data(fe::Data()),
-        _tele_sprite(bn::sprite_items::cat_sprite.create_sprite(0, 0))
+        _tele_sprite(bn::sprite_items::bowser_sprite.create_sprite(0, 0))
     {
         _map.value().set_visible(false); // why can't I leave something uninitialised
         _sprite.put_above();
         _sprite.set_visible(false);
         _tele_sprite.set_bg_priority(1);
         _tele_sprite.put_above();
-        _tele_sprite.set_item(bn::sprite_items::cat_sprite, 16);
+        _tele_sprite.set_item(bn::sprite_items::bowser_sprite, 16);
         _tele_sprite.set_visible(false);
 
         _text_bg1.set_scale(2);
@@ -339,27 +339,27 @@ namespace fe
         if(_attacking){
             if(_action.graphics_indexes().front() != 14){
                 _action = bn::create_sprite_animate_action_once(
-                            _sprite, 1, bn::sprite_items::cat_sprite.tiles_item(), 14,14,14,14,14,14,14,14,15,15);
+                            _sprite, 1, bn::sprite_items::bowser_sprite.tiles_item(), 14,14,14,14,14,14,14,14,15,15);
             }
         } else if(_jumping){
             _action = bn::create_sprite_animate_action_forever(
-                            _sprite, 6, bn::sprite_items::cat_sprite.tiles_item(), 12,12,12,12,12,12,12,12,12,12);
+                            _sprite, 6, bn::sprite_items::bowser_sprite.tiles_item(), 12,12,12,12,12,12,12,12,12,12);
         } else if(_falling){
             _action = bn::create_sprite_animate_action_forever(
-                            _sprite, 6, bn::sprite_items::cat_sprite.tiles_item(), 13,13,13,13,13,13,13,13,13,13);
+                            _sprite, 6, bn::sprite_items::bowser_sprite.tiles_item(), 13,13,13,13,13,13,13,13,13,13);
         } else if(_sliding){
             _action = bn::create_sprite_animate_action_forever(
-                            _sprite, 6, bn::sprite_items::cat_sprite.tiles_item(), 6,6,6,6,6,6,6,6,6,6);
+                            _sprite, 6, bn::sprite_items::bowser_sprite.tiles_item(), 6,6,6,6,6,6,6,6,6,6);
         } else if(_running){
             if(_action.graphics_indexes().front() != 8){
                 _action = bn::create_sprite_animate_action_forever(
-                        _sprite, 2.5, bn::sprite_items::cat_sprite.tiles_item(), 8, 9,10,11, 2, 3, 4, 5, 6,7);
+                        _sprite, 2.5, bn::sprite_items::bowser_sprite.tiles_item(), 8, 9,10,11, 2, 3, 4, 5, 6,7);
             }
         } else {
             //idle
             if(_action.graphics_indexes().front() != 0){
                 _action = bn::create_sprite_animate_action_forever(
-                        _sprite, 30, bn::sprite_items::cat_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
+                        _sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
             }
         }
 

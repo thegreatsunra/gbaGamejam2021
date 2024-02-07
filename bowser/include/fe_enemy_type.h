@@ -6,7 +6,7 @@ namespace fe
     enum class ENEMY_TYPE
     {
         BAT,
-        SLIME,
+        MARIO
         SLIMEO,
         WALL,
         BOSS,

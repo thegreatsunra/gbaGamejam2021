@@ -14,7 +14,7 @@
 #include "fe_enemy.h"
 #include "fe_data.h"
 
-#include "bn_sprite_items_cat_sprite.h"
+#include "bn_sprite_items_bowser_sprite.h"
 
 namespace fe
 {
@@ -59,7 +59,7 @@ namespace fe
             fe::Hitbox _hitbox_right = Hitbox(4,0,6,8);
             fe::Hitbox _hitbox_jump = Hitbox(0,4,6,4);
             bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
-                        _sprite, 30, bn::sprite_items::cat_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
+                        _sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
             bn::optional<bn::sprite_animate_action<4>> _spin_action;
             void _update_camera(int lerp);
             

@@ -20,7 +20,7 @@
 #include "fe_scene.h"
 
 //assets
-#include "bn_sprite_items_cat_sprite.h"
+#include "bn_sprite_items_bowser_sprite.h"
 #include "bn_sprite_items_title_cat.h"
 #include "bn_sprite_items_title_start_1.h"
 #include "bn_sprite_items_title_start_2.h"
@@ -51,13 +51,13 @@ namespace fe
         bn::music_items::mystic.play();
 
         // player sprite
-        bn::sprite_ptr cat_sprite = bn::sprite_items::cat_sprite.create_sprite(init_pos.x(), init_pos.y());
+        bn::sprite_ptr bowser_sprite = bn::sprite_items::bowser_sprite.create_sprite(init_pos.x(), init_pos.y());
         bn::sprite_ptr platform = bn::sprite_items::title_cat.create_sprite(init_pos.x(), init_pos.y());
         platform.set_horizontal_scale(2);
         platform.set_vertical_scale(2);
 
-        cat_sprite.set_horizontal_scale(2);
-        cat_sprite.set_vertical_scale(2);
+        bowser_sprite.set_horizontal_scale(2);
+        bowser_sprite.set_vertical_scale(2);
 
         bn::sprite_ptr start1 = bn::sprite_items::title_start_1.create_sprite(-16,30);
         bn::sprite_ptr start2 = bn::sprite_items::title_start_2.create_sprite(0,30);
@@ -68,7 +68,7 @@ namespace fe
        
 
         bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
-                        cat_sprite, 30, bn::sprite_items::cat_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
+                        bowser_sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
         
         bn::camera_ptr camera = bn::camera_ptr::create(0,0);
 
@@ -80,7 +80,7 @@ namespace fe
 
         // camera
         platform.set_camera(camera);
-        cat_sprite.set_camera(camera);
+        bowser_sprite.set_camera(camera);
         map.set_camera(camera);
 
         bn::fixed layer_1 = 0;
@@ -95,7 +95,7 @@ namespace fe
 
         while(!(bn::keypad::any_pressed() && timer > 60))
         {
-            // cat_sprite.set_x(cat_sprite.x() + 1.3);
+            // bowser_sprite.set_x(bowser_sprite.x() + 1.3);
 
             ++timer;
             layer_1 = loop(layer_1, 0.3);
@@ -142,6 +142,6 @@ namespace fe
             bn::core::update();
         }
 
-        return Scene::HOUSE_START;
+        return Scene::PATH_START;
     }
 }

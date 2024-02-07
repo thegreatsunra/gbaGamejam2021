@@ -1,5 +1,5 @@
-#ifndef FE_SCENE_HOUSE_H
-#define FE_SCENE_HOUSE_H
+#ifndef FE_SCENE_PATH_H
+#define FE_SCENE_PATH_H
 
 #include "fe_scene.h"
 #include "fe_player.h"
@@ -7,12 +7,12 @@
 
 namespace fe
 {
-    class House
+    class Path
     {       
         private:
             Player* _player;
         public:
-            House(Player& player);
+            Path(Player& player);
             Scene execute(bn::fixed_point spawn);
     };
 }
