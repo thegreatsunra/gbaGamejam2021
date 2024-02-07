@@ -104,7 +104,7 @@ namespace fe
             _sprite.value().set_bg_priority(1);
             _action = bn::create_sprite_animate_action_forever(
                             _sprite.value(), 4, bn::sprite_items::bat_sprite.tiles_item(), 0,1,0,1);
-        } else if (_type == ENEMY_TYPE::MARIO{
+        } else if (_type == ENEMY_TYPE::MARIO){
             _sprite = bn::sprite_items::mario_sprite.create_sprite(_pos.x(), _pos.y());
             _sprite.value().set_camera(_camera);
             _sprite.value().set_bg_priority(1);
@@ -244,7 +244,7 @@ namespace fe
             }
             if(_hp <= 0){
                 bn::sound_items::death.play();
-                if(_type == ENEMY_TYPE::MARIO{
+                if(_type == ENEMY_TYPE::MARIO){
                     _action = bn::create_sprite_animate_action_once(
                         _sprite.value(), 5, bn::sprite_items::mario_sprite.tiles_item(), 2,3,3,3);
                 }
@@ -442,7 +442,7 @@ namespace fe
                 }
                 if(_type == ENEMY_TYPE::MARIO|| _type == ENEMY_TYPE::SLIMEO){
                     if((_action.value().current_index() == 1 || _action.value().current_index() == 3)  && !_invulnerable && _grounded){
-                        if(_type == ENEMY_TYPE::MARIO{
+                        if(_type == ENEMY_TYPE::MARIO){
                             _dx += _dir*acc;
                         } else {
                             _dx += _dir*acc*1.5;
