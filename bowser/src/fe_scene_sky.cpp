@@ -21,7 +21,7 @@
 #include "fe_scene.h"
 
 //assets
-#include "bn_sprite_items_cat_sprite.h"
+#include "bn_sprite_items_bowser_sprite.h"
 #include "bn_affine_bg_items_cliffs.h"
 #include "bn_regular_bg_items_cliffs_bg.h"
 
@@ -91,7 +91,7 @@ namespace fe
                 if(_player->pos().x() < 170 && _player->pos().x() > 140){
                     if(_player->pos().y() < 294 && _player->pos().y() > 264){
                         _player->delete_data();
-                        return Scene::SKY_HOUSE;
+                        return Scene::SKY_PATH;
                     }
                 }
             }

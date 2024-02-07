@@ -1,4 +1,4 @@
-#include "fe_scene_house.h"
+#include "fe_scene_path.h"
 
 //butano
 #include "bn_affine_bg_map_cell.h"
@@ -25,10 +25,10 @@
 #include "fe_enemy_type.h"
 
 //assets
-#include "bn_sprite_items_cat_sprite.h"
+#include "bn_sprite_items_bowser_sprite.h"
 // #include "bn_sprite_items_box.h"
-#include "bn_affine_bg_items_house_2x.h"
-// #include "bn_regular_bg_items_house_bg.h"
+#include "bn_affine_bg_items_path.h"
+// #include "bn_regular_bg_items_path_bg.h"
 
 // #include "bn_sprite_text_generator.h"
 // #include "bn_music_items.h"
@@ -36,19 +36,19 @@
 
 namespace fe
 {
-    House::House(Player& player)
+    Path::Path(Player& player)
     : _player(&player){}
 
-    Scene House::execute(bn::fixed_point spawn_location)
+    Scene Path::execute(bn::fixed_point spawn_lobowserion)
     {
-        bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
+        bn::camera_ptr camera = bn::camera_ptr::create(spawn_lobowserion.x(), spawn_lobowserion.y());
 
         // bn::music_items::piana.play();
         // bn::music::set_volume(0.7);
 
         // map
-        // bn::regular_bg_ptr map_bg = bn::regular_bg_items::house_bg.create_bg(512, 512);
-        bn::affine_bg_ptr map = bn::affine_bg_items::house_2x.create_bg(512, 512);
+        // bn::regular_bg_ptr map_bg = bn::regular_bg_items::path_bg.create_bg(512, 512);
+        bn::affine_bg_ptr map = bn::affine_bg_items::path.create_bg(512, 512);
         // map_bg.set_priority(2);
         map.set_priority(1);
         fe::Level level = fe::Level(map);
@@ -62,14 +62,14 @@ namespace fe
 
         //Enemies
         bn::vector<Enemy, 16> enemies = {};
-        enemies.push_back(Enemy(400, 500, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(500, 500, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(600, 500, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(700, 500, camera, map, ENEMY_TYPE::SLIME, 2));
-        enemies.push_back(Enemy(800, 500, camera, map, ENEMY_TYPE::SLIME, 2));
+        enemies.push_back(Enemy(400, 500, camera, map, ENEMY_TYPE::MARIO, 2));
+        enemies.push_back(Enemy(500, 500, camera, map, ENEMY_TYPE::MARIO, 2));
+        enemies.push_back(Enemy(600, 500, camera, map, ENEMY_TYPE::MARIO, 2));
+        enemies.push_back(Enemy(700, 500, camera, map, ENEMY_TYPE::MARIO, 2));
+        enemies.push_back(Enemy(800, 500, camera, map, ENEMY_TYPE::MARIO, 2));
 
         // player
-        _player->spawn(spawn_location, camera, map, enemies);
+        _player->spawn(spawn_lobowserion, camera, map, enemies);
         while(true)
         {
 
@@ -94,7 +94,7 @@ namespace fe
             //     if(_player->pos().x() < 570 && _player->pos().x() > 540){
             //         if(_player->pos().y() < 400 && _player->pos().y() > 360){
             //             _player->delete_data();
-            //             return Scene::HOUSE_SKY;
+            //             return Scene::PATH_SKY;
             //         }
             //     }
             // }

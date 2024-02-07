@@ -23,7 +23,7 @@
 #include "fe_hitbox.h"
 #include "fe_scene_sky.h"
 #include "fe_scene_other.h"
-#include "fe_scene_house.h"
+#include "fe_scene_path.h"
 #include "fe_scene_loading.h"
 #include "fe_scene_title.h"
 #include "fe_scene_gba.h"
@@ -31,26 +31,26 @@
 #include "fe_scene_lab_after.h"
 #include "fe_scene.h"
 
-#include "bn_sprite_items_cat_sprite.h"
+#include "bn_sprite_items_bowser_sprite.h"
 
 int main()
 {
     bn::core::init();
     // fe::Scene scene = fe::Scene::GBA;
 
-    bn::sprite_ptr cat_sprite = bn::sprite_items::cat_sprite.create_sprite(0,0);
-    cat_sprite.set_visible(false);
-    fe::Player player = fe::Player(cat_sprite);
+    bn::sprite_ptr bowser_sprite = bn::sprite_items::bowser_sprite.create_sprite(0,0);
+    bowser_sprite.set_visible(false);
+    fe::Player player = fe::Player(bowser_sprite);
 
     while(true)
     {
-        fe::House house = fe::House(player);
-        house.execute(bn::fixed_point(100, 540));
-        // if(scene == fe::Scene::HOUSE_START){
-        //     fe::House house = fe::House(player);
-        //     scene = house.execute(bn::fixed_point(293, 368));
+        fe::Path path = fe::Path(player);
+        path.execute(bn::fixed_point(100, 540));
+        // if(scene == fe::Scene::PATH_START){
+        //     fe::Path path = fe::Path(player);
+        //     scene = path.execute(bn::fixed_point(293, 368));
         // } 
-        // else if(scene == fe::Scene::HOUSE_SKY){
+        // else if(scene == fe::Scene::PATH_SKY){
         //     fe::Sky sky = fe::Sky(player);
         //     scene = sky.execute(bn::fixed_point(153, 272));
         // } 
@@ -59,10 +59,10 @@ int main()
         //     fe::Sky sky = fe::Sky(player);
         //     scene = sky.execute(bn::fixed_point(169, 616));
         // }
-        // else if(scene == fe::Scene::SKY_HOUSE)
+        // else if(scene == fe::Scene::SKY_PATH)
         // {
-        //     fe::House house = fe::House(player);
-        //     scene = house.execute(bn::fixed_point(555, 384));
+        //     fe::Path path = fe::Path(player);
+        //     scene = path.execute(bn::fixed_point(555, 384));
         // }
         // else if(scene == fe::Scene::TITLE)
         // {

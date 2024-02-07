@@ -10,9 +10,9 @@
 #include "bn_keypad.h"
 #include "bn_random.h"
 #include "bn_sprite_items_bat_sprite.h"
-#include "bn_sprite_items_slime_sprite.h"
+#include "bn_sprite_items_mario_sprite.h"
 #include "bn_sprite_items_mutant.h"
-#include "bn_sprite_items_slime_sprite_2.h"
+#include "bn_sprite_items_mario_sprite_2.h"
 #include "bn_sprite_items_child.h"
 #include "bn_sprite_items_wall.h"
 #include "bn_sprite_items_rat.h"
@@ -104,18 +104,18 @@ namespace fe
             _sprite.value().set_bg_priority(1);
             _action = bn::create_sprite_animate_action_forever(
                             _sprite.value(), 4, bn::sprite_items::bat_sprite.tiles_item(), 0,1,0,1);
-        } else if (_type == ENEMY_TYPE::SLIME){
-            _sprite = bn::sprite_items::slime_sprite.create_sprite(_pos.x(), _pos.y());
+        } else if (_type == ENEMY_TYPE::MARIO){
+            _sprite = bn::sprite_items::mario_sprite.create_sprite(_pos.x(), _pos.y());
             _sprite.value().set_camera(_camera);
             _sprite.value().set_bg_priority(1);
             _action = bn::create_sprite_animate_action_forever(
-                             _sprite.value(), 10, bn::sprite_items::slime_sprite.tiles_item(), 0,1,0,1);
+                             _sprite.value(), 10, bn::sprite_items::mario_sprite.tiles_item(), 0,1,0,1);
         } else if (_type == ENEMY_TYPE::SLIMEO){
-            _sprite = bn::sprite_items::slime_sprite_2.create_sprite(_pos.x(), _pos.y());
+            _sprite = bn::sprite_items::mario_sprite_2.create_sprite(_pos.x(), _pos.y());
             _sprite.value().set_camera(_camera);
             _sprite.value().set_bg_priority(1);
             _action = bn::create_sprite_animate_action_forever(
-                             _sprite.value(), 20, bn::sprite_items::slime_sprite_2.tiles_item(), 0,1,0,1);
+                             _sprite.value(), 20, bn::sprite_items::mario_sprite_2.tiles_item(), 0,1,0,1);
         }
          else if (_type == ENEMY_TYPE::WALL){
             _sprite = bn::sprite_items::wall.create_sprite(_pos.x(), _pos.y());
@@ -244,14 +244,14 @@ namespace fe
             }
             if(_hp <= 0){
                 bn::sound_items::death.play();
-                if(_type == ENEMY_TYPE::SLIME){
+                if(_type == ENEMY_TYPE::MARIO){
                     _action = bn::create_sprite_animate_action_once(
-                        _sprite.value(), 5, bn::sprite_items::slime_sprite.tiles_item(), 2,3,3,3);
+                        _sprite.value(), 5, bn::sprite_items::mario_sprite.tiles_item(), 2,3,3,3);
                 }
                 else if (_type == ENEMY_TYPE::SLIMEO)
                 {
                     _action = bn::create_sprite_animate_action_once(
-                        _sprite.value(), 5, bn::sprite_items::slime_sprite_2.tiles_item(), 2,3,3,3);
+                        _sprite.value(), 5, bn::sprite_items::mario_sprite_2.tiles_item(), 2,3,3,3);
                 }
                 else if (_type == ENEMY_TYPE::BAT)
                 {
@@ -424,7 +424,7 @@ namespace fe
                 
             }
 
-            if(_type == ENEMY_TYPE::SLIME || _type == ENEMY_TYPE::SLIMEO || _type == ENEMY_TYPE::RAT || _type == ENEMY_TYPE::BOSS || _type == ENEMY_TYPE::MUTANT){
+            if(_type == ENEMY_TYPE::MARIO|| _type == ENEMY_TYPE::SLIMEO || _type == ENEMY_TYPE::RAT || _type == ENEMY_TYPE::BOSS || _type == ENEMY_TYPE::MUTANT){
                 if(!_invulnerable && _grounded && _direction_timer > 30 && _type != ENEMY_TYPE::MUTANT){
                     if(_will_fall() || _will_hit_wall()){
                         _dx = 0;
@@ -440,9 +440,9 @@ namespace fe
                         _sprite.value().set_horizontal_flip(!_sprite.value().horizontal_flip());
                     }
                 }
-                if(_type == ENEMY_TYPE::SLIME || _type == ENEMY_TYPE::SLIMEO){
+                if(_type == ENEMY_TYPE::MARIO|| _type == ENEMY_TYPE::SLIMEO){
                     if((_action.value().current_index() == 1 || _action.value().current_index() == 3)  && !_invulnerable && _grounded){
-                        if(_type == ENEMY_TYPE::SLIME){
+                        if(_type == ENEMY_TYPE::MARIO){
                             _dx += _dir*acc;
                         } else {
                             _dx += _dir*acc*1.5;
