@@ -3,16 +3,16 @@
 
 namespace fe
 {
-    enum class ENEMY_TYPE
-    {
-        BAT,
-        MARIO,
-        SLIMEO,
-        WALL,
-        BOSS,
-        RAT,
-        MUTANT
-    };
+enum class ENEMY_TYPE
+{
+    BAT,
+    MARIO,
+    SLIMEO,
+    WALL,
+    BOSS,
+    RAT,
+    MUTANT
+};
 }
 
 #endif

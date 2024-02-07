@@ -18,79 +18,79 @@
 
 namespace fe
 {
-    class Player
-    {
-        private:
-            bn::sprite_ptr _sprite;
-            bn::sprite_ptr _tele_sprite;
-            bn::fixed _dx;
-            bn::fixed _dy;
-            bn::fixed_point _pos;
-            bn::optional<bn::camera_ptr> _camera;
-            bn::sprite_ptr _text_bg1;
-            bn::sprite_ptr _text_bg2;
-            bn::sprite_ptr _skip;
+class Player
+{
+private:
+    bn::sprite_ptr _sprite;
+    bn::sprite_ptr _tele_sprite;
+    bn::fixed _dx;
+    bn::fixed _dy;
+    bn::fixed_point _pos;
+    bn::optional<bn::camera_ptr> _camera;
+    bn::sprite_ptr _text_bg1;
+    bn::sprite_ptr _text_bg2;
+    bn::sprite_ptr _skip;
 
-            //used for state management
-            bool _jumping = false;
-            bool _falling = false;
-            bool _running = false;
-            bool _listening = false;
-            bool _grounded = false;
-            bool _sliding = false;
-            bool _already_running = false;
-            bool _attacking = false;
+    //used for state management
+    bool _jumping = false;
+    bool _falling = false;
+    bool _running = false;
+    bool _listening = false;
+    bool _grounded = false;
+    bool _sliding = false;
+    bool _already_running = false;
+    bool _attacking = false;
 
-            bool _glow_unlocked = true;
+    bool _glow_unlocked = true;
 
-            bool _invulnerable = false;
-            int _inv_timer = 0;
+    bool _invulnerable = false;
+    int _inv_timer = 0;
 
-            bool _can_teleport = false;
+    bool _can_teleport = false;
 
-            Data _data;
+    Data _data;
 
-            bn::optional<bn::span<const bn::affine_bg_map_cell>> _map_cells;
-            bn::optional<bn::affine_bg_ptr> _map;
-            bn::optional<bn::vector<Enemy,16>*> _enemies;
+    bn::optional<bn::span<const bn::affine_bg_map_cell>> _map_cells;
+    bn::optional<bn::affine_bg_ptr> _map;
+    bn::optional<bn::vector<Enemy,16>*> _enemies;
 
-            fe::Hitbox _hitbox_fall = Hitbox(0,8,8,0);
-            fe::Hitbox _hitbox_left = Hitbox(-4,0,4,8);
-            fe::Hitbox _hitbox_right = Hitbox(4,0,6,8);
-            fe::Hitbox _hitbox_jump = Hitbox(0,4,6,4);
-            bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
-                        _sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
-            bn::optional<bn::sprite_animate_action<4>> _spin_action;
-            void _update_camera(int lerp);
-            
+    fe::Hitbox _hitbox_fall = Hitbox(0,8,8,0);
+    fe::Hitbox _hitbox_left = Hitbox(-4,0,4,8);
+    fe::Hitbox _hitbox_right = Hitbox(4,0,6,8);
+    fe::Hitbox _hitbox_jump = Hitbox(0,4,6,4);
+    bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
+            _sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
+    bn::optional<bn::sprite_animate_action<4>> _spin_action;
+    void _update_camera(int lerp);
 
-        public:
-            Player(bn::sprite_ptr sprite);
 
-            void hide();
-            Data data();
-            
-            [[nodiscard]] bn::fixed_point pos();
+public:
+    Player(bn::sprite_ptr sprite);
 
-            void jump(bn::affine_bg_ptr map, fe::Level level);
-            void attack();
-            void collide_with_objects(bn::affine_bg_ptr map, fe::Level level);
-            void collide_with_enemies();
-            void move_right();
-            void delete_data();
-            void move_left();
-            void check_attack();
-            void set_listening(bool is_listening);
-            void set_can_teleport(bool can_teleport);
-            bool is_listening();
-            void apply_animation_state();
-            void update_position(bn::affine_bg_ptr map, fe::Level level);
+    void hide();
+    Data data();
 
-            void spawn(bn::fixed_point pos, bn::camera_ptr camera, bn::affine_bg_ptr map, bn::vector<Enemy,16>& enemies);
-            void reset();
+    [[nodiscard]] bn::fixed_point pos();
 
-            bool is_right();
-    };
+    void jump(bn::affine_bg_ptr map, fe::Level level);
+    void attack();
+    void collide_with_objects(bn::affine_bg_ptr map, fe::Level level);
+    void collide_with_enemies();
+    void move_right();
+    void delete_data();
+    void move_left();
+    void check_attack();
+    void set_listening(bool is_listening);
+    void set_can_teleport(bool can_teleport);
+    bool is_listening();
+    void apply_animation_state();
+    void update_position(bn::affine_bg_ptr map, fe::Level level);
+
+    void spawn(bn::fixed_point pos, bn::camera_ptr camera, bn::affine_bg_ptr map, bn::vector<Enemy,16>& enemies);
+    void reset();
+
+    bool is_right();
+};
 }
 
 #endif

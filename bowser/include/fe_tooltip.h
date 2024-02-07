@@ -17,28 +17,28 @@
 
 namespace fe
 {
-    class Tooltip
-    {
-        private:
-            bn::fixed_point _pos;
-            bool _is_talking = false;
-            bool _finished = false;
-            bn::string_view _line;
-            bn::sprite_text_generator& _text_generator;
-            const bn::fixed _text_y_inc = 14;
-            const bn::fixed _text_y_limit = (bn::display::height() / 2) - _text_y_inc;
-            bn::vector<bn::sprite_ptr, 32> _text_sprites;
+class Tooltip
+{
+private:
+    bn::fixed_point _pos;
+    bool _is_talking = false;
+    bool _finished = false;
+    bn::string_view _line;
+    bn::sprite_text_generator& _text_generator;
+    const bn::fixed _text_y_inc = 14;
+    const bn::fixed _text_y_limit = (bn::display::height() / 2) - _text_y_inc;
+    bn::vector<bn::sprite_ptr, 32> _text_sprites;
 
 
-            int _currentChar = 0;
-            bn::string_view _currentChars = "";
+    int _currentChar = 0;
+    bn::string_view _currentChars = "";
 
-        public:
-            Tooltip(bn::fixed_point pos, bn::string_view line, bn::sprite_text_generator& text_generator);
-            void update();
-            bool check_trigger(bn::fixed_point pos);
-            
-    };
+public:
+    Tooltip(bn::fixed_point pos, bn::string_view line, bn::sprite_text_generator& text_generator);
+    void update();
+    bool check_trigger(bn::fixed_point pos);
+
+};
 }
 
 #endif

@@ -5,11 +5,11 @@
 
 namespace fe
 {
-    class Loading
-    {       
-        public:
-            void execute(Scene next_scene);
-    };
+class Loading
+{
+public:
+    void execute(Scene next_scene);
+};
 }
 
 #endif

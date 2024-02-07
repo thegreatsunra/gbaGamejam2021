@@ -3,13 +3,13 @@
 
 namespace fe
 {
-    class Data
-    {
-        public:
-            Data();
-            bool learned_attack;
-            bool learned_wallrun;
-    };
+class Data
+{
+public:
+    Data();
+    bool learned_attack;
+    bool learned_wallrun;
+};
 }
 
 #endif

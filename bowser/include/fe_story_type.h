@@ -3,13 +3,13 @@
 
 namespace fe
 {
-    enum class STORY_TYPE
-    {
-        FIRST,
-        SECOND,
-        THIRD,
-        CRACKED
-    };
+enum class STORY_TYPE
+{
+    FIRST,
+    SECOND,
+    THIRD,
+    CRACKED
+};
 }
 
 #endif

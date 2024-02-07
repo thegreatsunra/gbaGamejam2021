@@ -128,7 +128,7 @@ constexpr const int8_t variable_8x8_sprite_font_character_widths[] = {
 };
 
 constexpr const bn::sprite_font variable_8x8_sprite_font(
-        bn::sprite_items::variable_8x8_font, variable_8x8_sprite_font_utf8_characters,
-        variable_8x8_sprite_font_character_widths);
+    bn::sprite_items::variable_8x8_font, variable_8x8_sprite_font_utf8_characters,
+    variable_8x8_sprite_font_character_widths);
 
 #endif

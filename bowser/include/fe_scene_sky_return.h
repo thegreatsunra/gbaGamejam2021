@@ -7,14 +7,14 @@
 
 namespace fe
 {
-    class SkyReturn
-    {       
-        private:
-            Player* _player;
-        public:
-            SkyReturn(Player& player);
-            Scene execute(bn::fixed_point spawn);
-    };
+class SkyReturn
+{
+private:
+    Player* _player;
+public:
+    SkyReturn(Player& player);
+    Scene execute(bn::fixed_point spawn);
+};
 }
 
 #endif

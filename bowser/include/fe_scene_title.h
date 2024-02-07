@@ -5,11 +5,11 @@
 
 namespace fe
 {
-    class Title
-    {       
-        public:
-            Scene execute();
-    };
+class Title
+{
+public:
+    Scene execute();
+};
 }
 
 #endif

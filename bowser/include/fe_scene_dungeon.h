@@ -7,14 +7,14 @@
 
 namespace fe
 {
-    class Dungeon
-    {       
-        private:
-            Player* _player;
-        public:
-            Dungeon(Player& player);
-            Scene execute(bn::fixed_point spawn);
-    };
+class Dungeon
+{
+private:
+    Player* _player;
+public:
+    Dungeon(Player& player);
+    Scene execute(bn::fixed_point spawn);
+};
 }
 
 #endif

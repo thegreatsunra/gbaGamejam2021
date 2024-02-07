@@ -7,14 +7,14 @@
 
 namespace fe
 {
-    class Lab
-    {       
-        private:
-            Player* _player;
-        public:
-            Lab(Player& player);
-            Scene execute( bn::fixed_point spawn);
-    };
+class Lab
+{
+private:
+    Player* _player;
+public:
+    Lab(Player& player);
+    Scene execute( bn::fixed_point spawn);
+};
 }
 
 #endif

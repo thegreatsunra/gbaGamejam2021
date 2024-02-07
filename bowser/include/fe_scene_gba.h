@@ -5,11 +5,11 @@
 
 namespace fe
 {
-    class GBA
-    {       
-        public:
-            Scene execute();
-    };
+class GBA
+{
+public:
+    Scene execute();
+};
 }
 
 #endif
