@@ -66,13 +66,10 @@ Scene Title::execute()
     bn::sprite_ptr title1 = bn::sprite_items::title_1.create_sprite(-32,-30);
     bn::sprite_ptr title2 = bn::sprite_items::title_2.create_sprite(32,-30);
 
-
     bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
             bowser_sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
 
     bn::camera_ptr camera = bn::camera_ptr::create(0,0);
-
-
 
     bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
     bn::regular_bg_position_hbe_ptr horizontal_hbe =
@@ -111,7 +108,6 @@ Scene Title::execute()
         start1.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
         start2.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
         start3.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
-
 
         for(int index = 0, limit = 160; index < limit; ++index)
         {

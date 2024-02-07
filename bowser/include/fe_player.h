@@ -63,7 +63,6 @@ private:
     bn::optional<bn::sprite_animate_action<4>> _spin_action;
     void _update_camera(int lerp);
 
-
 public:
     Player(bn::sprite_ptr sprite);
 

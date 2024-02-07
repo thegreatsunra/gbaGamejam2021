@@ -21,7 +21,6 @@
 #include "fe_player.h"
 #include "fe_scene.h"
 
-
 #include "bn_blending_actions.h"
 #include "bn_sprite_actions.h"
 
@@ -111,7 +110,6 @@ Scene Other::execute(bn::fixed_point spawn_location)
             _player->set_listening(false);
         }
 
-
         for(Enemy& enemy : enemies) {
             if(bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100) {
                 enemy.update(_player->pos());
@@ -119,7 +117,6 @@ Scene Other::execute(bn::fixed_point spawn_location)
                 enemy.set_visible(false);
             }
         }
-
 
         _player->update_position(map, level);
         _player->apply_animation_state();

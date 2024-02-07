@@ -23,7 +23,6 @@ public:
     bn::fixed height();
     bn::fixed_point pos();
 
-
     void set_x(bn::fixed x);
     void set_y(bn::fixed y);
     void set_width(bn::fixed width);

@@ -7,7 +7,6 @@
 #include "bn_log.h"
 #include "bn_string.h"
 
-
 namespace fe
 {
 Level::Level(bn::affine_bg_ptr bg)

@@ -10,8 +10,6 @@
 #include "bn_sprite_items_tortoise_sprite.h"
 #include "bn_sprite_items_penguin_sprite.h"
 
-
-
 namespace fe
 {
 

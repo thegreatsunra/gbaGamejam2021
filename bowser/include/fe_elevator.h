@@ -15,7 +15,6 @@ private:
     int _dist;
     int _start_y;
 
-
 public:
     Elevator(bn::fixed_point pos, bn::sprite_ptr top_sprite, bn::sprite_ptr bottom_sprite, int dist);
 

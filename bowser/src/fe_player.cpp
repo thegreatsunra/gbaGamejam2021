@@ -27,7 +27,6 @@
 #include "bn_affine_bg_items_path.h"
 #include "bn_sound_items.h"
 
-
 namespace fe
 {
 enum directions {up, down, left, right};

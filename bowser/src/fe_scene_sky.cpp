@@ -96,7 +96,6 @@ Scene Sky::execute(bn::fixed_point spawn_location)
             }
         }
 
-
         bn::core::update();
     }
 }

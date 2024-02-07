@@ -14,7 +14,6 @@
 
 #include "bn_sprite_text_generator.h"
 
-
 namespace fe
 {
 class Tooltip
@@ -28,7 +27,6 @@ private:
     const bn::fixed _text_y_inc = 14;
     const bn::fixed _text_y_limit = (bn::display::height() / 2) - _text_y_inc;
     bn::vector<bn::sprite_ptr, 32> _text_sprites;
-
 
     int _currentChar = 0;
     bn::string_view _currentChars = "";

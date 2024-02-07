@@ -58,7 +58,6 @@ void Loading::execute(Scene next_scene)
     bn::sprite_animate_action<10> action5 = bn::create_sprite_animate_action_forever(
             bowser_sprite5, 2, bn::sprite_items::bowser_sprite.tiles_item(), 8, 9,10,11, 2, 3, 4, 5, 6,7);
 
-
     bn::camera_ptr camera = bn::camera_ptr::create(init_pos.x()+100, init_pos.y());
 
     // map
@@ -90,7 +89,6 @@ void Loading::execute(Scene next_scene)
         return;
     }
 
-
     // camera
     bowser_sprite1.set_camera(camera);
     bowser_sprite2.set_camera(camera);
@@ -114,7 +112,6 @@ void Loading::execute(Scene next_scene)
             bowser_sprite4.set_x(bowser_sprite4.x() - 2.2);
             bowser_sprite5.set_x(bowser_sprite5.x() - 1.7);
         }
-
 
         action1.update();
         action2.update();

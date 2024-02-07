@@ -52,7 +52,6 @@ enum directions {up, down, left, right};
     bn::fixed u = pos.y() - hitbox.height() / 2 + hitbox.y();
     bn::fixed d = pos.y() + hitbox.height() / 2 + hitbox.y();
 
-
     bn::vector<int, 32> tiles;
     if(direction == down) {
         tiles = level.floor_tiles();
@@ -85,7 +84,6 @@ int time_to_jump = 180;
 bool is_tired = false;
 int time_to_sleep = 600;
 int sleep_timer = 0;
-
 
 bn::random random = bn::random();
 
@@ -147,7 +145,6 @@ Enemy::Enemy(int x, int y, bn::camera_ptr camera, bn::affine_bg_ptr map, ENEMY_T
                              _sprite.value(), 2, bn::sprite_items::mutant.tiles_item(), 3,4,5,6,7,8,9,10,11,12);
     }
     _sprite.value().set_visible(true);
-
 
 }
 
