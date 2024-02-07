@@ -78,9 +78,10 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,windows
 
 # Start of upstream
-build
-*.gba
 *.elf
-*.sav
 *.elfbin
+*.gba
+*.sav
+*/build/*
+*/log.txt
 # end of upstream

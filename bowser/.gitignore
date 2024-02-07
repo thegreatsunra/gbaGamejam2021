@@ -1,6 +1,0 @@
-build/*
-*.elf
-*.elfbin
-*.gba
-*.sav
-*/log.txt
