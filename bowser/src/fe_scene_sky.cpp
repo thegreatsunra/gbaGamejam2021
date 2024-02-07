@@ -33,71 +33,71 @@
 namespace fe
 {
 
-     Sky::Sky(Player& player)
-    : _player(&player){}
+Sky::Sky(Player& player)
+    : _player(&player) {}
 
-    Scene Sky::execute(bn::fixed_point spawn_location)
+Scene Sky::execute(bn::fixed_point spawn_location)
+{
+    bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
+
+    bn::music_items::piana.play();
+    bn::music::set_volume(0.6);
+
+    // map
+    bn::affine_bg_ptr map = bn::affine_bg_items::cliffs.create_bg(512, 512);
+    bn::regular_bg_ptr map_bg = bn::regular_bg_items::cliffs_bg.create_bg(512, 512);
+    map_bg.set_priority(2);
+    map.set_priority(1);
+    fe::Level level = fe::Level(map);
+
+    // camera
+    map_bg.set_camera(camera);
+    map.set_camera(camera);
+
+    // bn::fixed max_cpu_usage;
+    // int counter = 1;
+
+    bn::vector<Enemy, 16> enemies = {};
+
+    // _player
+    _player->spawn(spawn_location, camera, map, enemies);
+    while(true)
     {
-        bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
-        bn::music_items::piana.play();
-        bn::music::set_volume(0.6);
+        // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
+        // --counter;
+        // if(! counter)
+        // {
+        //     BN_LOG("cpu:" + bn::to_string<32>((max_cpu_usage * 100).right_shift_integer()));
+        //     max_cpu_usage = 0;
+        //     counter = 60;
+        // }
 
-        // map
-        bn::affine_bg_ptr map = bn::affine_bg_items::cliffs.create_bg(512, 512);
-        bn::regular_bg_ptr map_bg = bn::regular_bg_items::cliffs_bg.create_bg(512, 512);
-        map_bg.set_priority(2);
-        map.set_priority(1);
-        fe::Level level = fe::Level(map);
+        map_bg.set_x(map_bg.x() + 0.3);
 
-        // camera
-        map_bg.set_camera(camera);
-        map.set_camera(camera);
-        
-        // bn::fixed max_cpu_usage;
-        // int counter = 1;
+        _player->update_position(map, level);
+        _player->apply_animation_state();
+        // BN_LOG(bn::to_string<32>(_player->pos().x())+" " + bn::to_string<32>(_player->pos().y()));
 
-        bn::vector<Enemy, 16> enemies = {};
-
-        // _player
-        _player->spawn(spawn_location, camera, map, enemies);
-        while(true)
+        if(bn::keypad::up_pressed())
         {
-            
-            // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
-            // --counter;
-            // if(! counter)
-            // {
-            //     BN_LOG("cpu:" + bn::to_string<32>((max_cpu_usage * 100).right_shift_integer()));
-            //     max_cpu_usage = 0;
-            //     counter = 60;
-            // }
-
-            map_bg.set_x(map_bg.x() + 0.3);
-
-            _player->update_position(map, level);
-            _player->apply_animation_state();
-            // BN_LOG(bn::to_string<32>(_player->pos().x())+" " + bn::to_string<32>(_player->pos().y()));
-            
-            if(bn::keypad::up_pressed())
-            {
-                if(_player->pos().x() < 185 && _player->pos().x() > 155){
-                    if(_player->pos().y() < 644 && _player->pos().y() > 614){
-                        _player->delete_data();
-                        return Scene::SKY_DUNGEON;
-                    }
-                }
-
-                if(_player->pos().x() < 170 && _player->pos().x() > 140){
-                    if(_player->pos().y() < 294 && _player->pos().y() > 264){
-                        _player->delete_data();
-                        return Scene::SKY_PATH;
-                    }
+            if(_player->pos().x() < 185 && _player->pos().x() > 155) {
+                if(_player->pos().y() < 644 && _player->pos().y() > 614) {
+                    _player->delete_data();
+                    return Scene::SKY_DUNGEON;
                 }
             }
-            
-            
-            bn::core::update();
+
+            if(_player->pos().x() < 170 && _player->pos().x() > 140) {
+                if(_player->pos().y() < 294 && _player->pos().y() > 264) {
+                    _player->delete_data();
+                    return Scene::SKY_PATH;
+                }
+            }
         }
+
+
+        bn::core::update();
     }
+}
 }

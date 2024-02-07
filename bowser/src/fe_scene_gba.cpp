@@ -39,16 +39,16 @@ namespace fe
 Scene GBA::execute()
 {
 
-    bn::regular_bg_ptr map = bn::regular_bg_items::splash.create_bg(0 , 0);
+    bn::regular_bg_ptr map = bn::regular_bg_items::splash.create_bg(0, 0);
     int timer = 0;
     while(true)
     {
-        if(timer > 90){
+        if(timer > 90) {
             return Scene::TITLE;
         }
-        
+
         ++timer;
         bn::core::update();
-    }   
+    }
 }
 }

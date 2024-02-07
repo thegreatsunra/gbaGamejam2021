@@ -2,7 +2,7 @@
 
 namespace fe
 {
-    Data::Data() : 
-        learned_attack(false), learned_wallrun(false)
-    {}
+Data::Data() :
+    learned_attack(false), learned_wallrun(false)
+{}
 }
