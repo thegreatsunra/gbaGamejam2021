@@ -49,11 +49,11 @@ int main()
         // if(scene == fe::Scene::PATH_START){
         //     fe::Path path = fe::Path(player);
         //     scene = path.execute(bn::fixed_point(293, 368));
-        // } 
+        // }
         // else if(scene == fe::Scene::PATH_SKY){
         //     fe::Sky sky = fe::Sky(player);
         //     scene = sky.execute(bn::fixed_point(153, 272));
-        // } 
+        // }
         // else if(scene == fe::Scene::DUNGEON_SKY)
         // {
         //     fe::Sky sky = fe::Sky(player);
@@ -86,7 +86,7 @@ int main()
         //     loading.execute(scene);
         // }
         bn::core::update();
-        
+
     }
-    
+
 }
