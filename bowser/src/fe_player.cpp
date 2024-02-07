@@ -86,13 +86,13 @@ constexpr const bn::fixed friction = 0.85;
 
 Player::Player(bn::sprite_ptr sprite) :
     _sprite(sprite),
+    _tele_sprite(bn::sprite_items::bowser_sprite.create_sprite(0, 0)),
     _camera(bn::camera_ptr::create(0,0)),
-    _map(bn::affine_bg_items::path.create_bg(0, 0)),
     _text_bg1(bn::sprite_items::text_bg.create_sprite(0, 0)),
     _text_bg2(bn::sprite_items::text_bg.create_sprite(0, 0)),
     _skip(bn::sprite_items::skip.create_sprite(0, 0)),
     _data(fe::Data()),
-    _tele_sprite(bn::sprite_items::bowser_sprite.create_sprite(0, 0))
+    _map(bn::affine_bg_items::path.create_bg(0, 0))
 {
     _map.value().set_visible(false); // why can't I leave something uninitialised
     _sprite.put_above();
