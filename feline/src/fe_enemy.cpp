@@ -109,7 +109,7 @@ namespace fe
             _sprite.value().set_camera(_camera);
             _sprite.value().set_bg_priority(1);
             _action = bn::create_sprite_animate_action_forever(
-                             _sprite.value(), 20, bn::sprite_items::slime_sprite.tiles_item(), 0,1,0,1);
+                             _sprite.value(), 10, bn::sprite_items::slime_sprite.tiles_item(), 0,1,0,1);
         } else if (_type == ENEMY_TYPE::SLIMEO){
             _sprite = bn::sprite_items::slime_sprite_2.create_sprite(_pos.x(), _pos.y());
             _sprite.value().set_camera(_camera);
@@ -447,8 +447,10 @@ namespace fe
                         } else {
                             _dx += _dir*acc*1.5;
                         }
-                        if(_sound_timer > 20){
-                            bn::sound_items::slime.play(0.3);
+                        // 10 (or 20) is a magic number
+                        // maybe bind to animate_forever value
+                        if(_sound_timer > 10){
+                            bn::sound_items::steps.play(0.3);
                             _sound_timer = 0;
                         } else {
                             ++_sound_timer;

@@ -504,6 +504,13 @@ namespace fe
             _pos.set_x(4);
         }
 
+        // teleport player to "start" if they fall in a pit
+        // i.e. they "fall" above y=600
+        if(_pos.y() > 600){
+            _pos.set_y(540);
+            _pos.set_x(100);
+        }
+
         // update sprite position
         _sprite.set_x(_pos.x());
         _sprite.set_y(_pos.y());
