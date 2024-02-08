@@ -10,7 +10,7 @@ class Path {
 private:
     Player* _player;
 public:
-    Path(Player& player);
+    Path(Player &player);
     Scene execute(bn::fixed_point spawn);
 };
 }

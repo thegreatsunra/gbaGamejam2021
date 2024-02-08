@@ -10,7 +10,7 @@ class Sky {
 private:
     Player* _player;
 public:
-    Sky(Player& player);
+    Sky(Player &player);
     Scene execute(bn::fixed_point spawn);
 };
 }

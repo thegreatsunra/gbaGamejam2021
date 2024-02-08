@@ -41,7 +41,7 @@ private:
 
     bn::optional<bn::sprite_animate_action<10>> _mutant_action;
 
-    bn::fixed_point _target = bn::fixed_point(0,0);
+    bn::fixed_point _target = bn::fixed_point(0, 0);
     bool _target_locked = false;
 
     bn::span<const bn::affine_bg_map_cell> _map_cells;

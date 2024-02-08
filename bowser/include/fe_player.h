@@ -50,14 +50,14 @@ private:
 
     bn::optional<bn::span<const bn::affine_bg_map_cell>> _map_cells;
     bn::optional<bn::affine_bg_ptr> _map;
-    bn::optional<bn::vector<Enemy,16>*> _enemies;
+    bn::optional<bn::vector<Enemy, 16>*> _enemies;
 
-    fe::Hitbox _hitbox_fall = Hitbox(0,8,8,0);
-    fe::Hitbox _hitbox_left = Hitbox(-4,0,4,8);
-    fe::Hitbox _hitbox_right = Hitbox(4,0,6,8);
-    fe::Hitbox _hitbox_jump = Hitbox(0,4,6,4);
+    fe::Hitbox _hitbox_fall = Hitbox(0, 8, 8, 0);
+    fe::Hitbox _hitbox_left = Hitbox(-4, 0, 4, 8);
+    fe::Hitbox _hitbox_right = Hitbox(4, 0, 6, 8);
+    fe::Hitbox _hitbox_jump = Hitbox(0, 4, 6, 4);
     bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
-            _sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
+            _sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0, 1, 0, 1, 0, 1, 0, 1, 0, 1);
     bn::optional<bn::sprite_animate_action<4>> _spin_action;
     void _update_camera(int lerp);
 
@@ -83,7 +83,7 @@ public:
     void apply_animation_state();
     void update_position(bn::affine_bg_ptr map, fe::Level level);
 
-    void spawn(bn::fixed_point pos, bn::camera_ptr camera, bn::affine_bg_ptr map, bn::vector<Enemy,16>& enemies);
+    void spawn(bn::fixed_point pos, bn::camera_ptr camera, bn::affine_bg_ptr map, bn::vector<Enemy, 16> &enemies);
     void reset();
 
     bool is_right();

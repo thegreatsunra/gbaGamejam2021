@@ -10,7 +10,7 @@ class DungeonReturn {
 private:
     Player* _player;
 public:
-    DungeonReturn(Player& player);
+    DungeonReturn(Player &player);
     Scene execute(bn::fixed_point spawn);
 };
 }

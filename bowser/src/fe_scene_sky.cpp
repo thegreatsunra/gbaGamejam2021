@@ -32,7 +32,7 @@
 
 namespace fe {
 
-Sky::Sky(Player& player)
+Sky::Sky(Player &player)
     : _player(&player) {}
 
 Scene Sky::execute(bn::fixed_point spawn_location) {
@@ -59,7 +59,8 @@ Scene Sky::execute(bn::fixed_point spawn_location) {
 
     // _player
     _player->spawn(spawn_location, camera, map, enemies);
-    while(true) {
+
+    while (true) {
 
         // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
         // --counter;
@@ -76,16 +77,16 @@ Scene Sky::execute(bn::fixed_point spawn_location) {
         _player->apply_animation_state();
         // BN_LOG(bn::to_string<32>(_player->pos().x())+" " + bn::to_string<32>(_player->pos().y()));
 
-        if(bn::keypad::up_pressed()) {
-            if(_player->pos().x() < 185 && _player->pos().x() > 155) {
-                if(_player->pos().y() < 644 && _player->pos().y() > 614) {
+        if (bn::keypad::up_pressed()) {
+            if (_player->pos().x() < 185 && _player->pos().x() > 155) {
+                if (_player->pos().y() < 644 && _player->pos().y() > 614) {
                     _player->delete_data();
                     return Scene::SKY_DUNGEON;
                 }
             }
 
-            if(_player->pos().x() < 170 && _player->pos().x() > 140) {
-                if(_player->pos().y() < 294 && _player->pos().y() > 264) {
+            if (_player->pos().x() < 170 && _player->pos().x() > 140) {
+                if (_player->pos().y() < 294 && _player->pos().y() > 264) {
                     _player->delete_data();
                     return Scene::SKY_PATH;
                 }

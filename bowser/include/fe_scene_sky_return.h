@@ -10,7 +10,7 @@ class SkyReturn {
 private:
     Player* _player;
 public:
-    SkyReturn(Player& player);
+    SkyReturn(Player &player);
     Scene execute(bn::fixed_point spawn);
 };
 }

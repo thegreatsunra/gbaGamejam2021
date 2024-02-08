@@ -10,7 +10,7 @@ class Other {
 private:
     Player* _player;
 public:
-    Other(Player& player);
+    Other(Player &player);
     Scene execute( bn::fixed_point spawn);
 };
 }

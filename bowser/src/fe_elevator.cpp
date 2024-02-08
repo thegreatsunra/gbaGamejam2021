@@ -23,11 +23,12 @@ int Elevator::bottom_y() {
 }
 
 void Elevator::update_position() {
-    if(_pos.y() > _start_y - _dist) {
+    if (_pos.y() > _start_y - _dist) {
         _pos.set_y(_pos.y() - 0.2);
     } else {
         _pos.set_y(_start_y);
     }
+
     _top_sprite.set_y(_pos.y() - 16);
     _bottom_sprite.set_y(_pos.y() + 16);
 }

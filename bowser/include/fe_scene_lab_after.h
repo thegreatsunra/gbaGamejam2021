@@ -10,7 +10,7 @@ class LabAfter {
 private:
     Player* _player;
 public:
-    LabAfter(Player& player);
+    LabAfter(Player &player);
     Scene execute( bn::fixed_point spawn);
 };
 }

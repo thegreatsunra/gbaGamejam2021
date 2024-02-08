@@ -37,11 +37,11 @@ int main() {
     bn::core::init();
     // fe::Scene scene = fe::Scene::GBA;
 
-    bn::sprite_ptr bowser_sprite = bn::sprite_items::bowser_sprite.create_sprite(0,0);
+    bn::sprite_ptr bowser_sprite = bn::sprite_items::bowser_sprite.create_sprite(0, 0);
     bowser_sprite.set_visible(false);
     fe::Player player = fe::Player(bowser_sprite);
 
-    while(true) {
+    while (true) {
         fe::Path path = fe::Path(player);
         path.execute(bn::fixed_point(100, 540));
         // if(scene == fe::Scene::PATH_START){

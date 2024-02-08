@@ -34,7 +34,8 @@
 namespace fe {
 bn::fixed loop(bn::fixed number, bn::fixed increment) {
     number += increment;
-    if(number > 256) {
+
+    if (number > 256) {
         return 0;
     } else {
         return number;
@@ -57,17 +58,17 @@ Scene Title::execute() {
     bowser_sprite.set_horizontal_scale(2);
     bowser_sprite.set_vertical_scale(2);
 
-    bn::sprite_ptr start1 = bn::sprite_items::title_start_1.create_sprite(-16,30);
-    bn::sprite_ptr start2 = bn::sprite_items::title_start_2.create_sprite(0,30);
-    bn::sprite_ptr start3 = bn::sprite_items::title_start_3.create_sprite(16,30);
+    bn::sprite_ptr start1 = bn::sprite_items::title_start_1.create_sprite(-16, 30);
+    bn::sprite_ptr start2 = bn::sprite_items::title_start_2.create_sprite(0, 30);
+    bn::sprite_ptr start3 = bn::sprite_items::title_start_3.create_sprite(16, 30);
 
-    bn::sprite_ptr title1 = bn::sprite_items::title_1.create_sprite(-32,-30);
-    bn::sprite_ptr title2 = bn::sprite_items::title_2.create_sprite(32,-30);
+    bn::sprite_ptr title1 = bn::sprite_items::title_1.create_sprite(-32, -30);
+    bn::sprite_ptr title2 = bn::sprite_items::title_2.create_sprite(32, -30);
 
     bn::sprite_animate_action<10> _action = bn::create_sprite_animate_action_forever(
-            bowser_sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0,1,0,1,0,1,0,1,0,1);
+            bowser_sprite, 30, bn::sprite_items::bowser_sprite.tiles_item(), 0, 1, 0, 1, 0, 1, 0, 1, 0, 1);
 
-    bn::camera_ptr camera = bn::camera_ptr::create(0,0);
+    bn::camera_ptr camera = bn::camera_ptr::create(0, 0);
 
     bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
     bn::regular_bg_position_hbe_ptr horizontal_hbe =
@@ -88,7 +89,7 @@ Scene Title::execute() {
 
     int timer = 0;
 
-    while(!(bn::keypad::any_pressed() && timer > 60)) {
+    while (!(bn::keypad::any_pressed() && timer > 60)) {
         // bowser_sprite.set_x(bowser_sprite.x() + 1.3);
 
         ++timer;
@@ -98,22 +99,23 @@ Scene Title::execute() {
         layer_4 = loop(layer_4, 0.5);
 
         start_amp += 6;
-        if(start_amp >= 360) {
+
+        if (start_amp >= 360) {
             start_amp = 0;
         }
 
-        start1.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
-        start2.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
-        start3.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
+        start1.set_y(start_y + bn::degrees_lut_sin(start_amp * 1) * 4);
+        start2.set_y(start_y + bn::degrees_lut_sin(start_amp * 1) * 4);
+        start3.set_y(start_y + bn::degrees_lut_sin(start_amp * 1) * 4);
 
-        for(int index = 0, limit = 160; index < limit; ++index) {
-            if( index > 140) {
+        for (int index = 0, limit = 160; index < limit; ++index) {
+            if ( index > 140) {
                 horizontal_deltas[index] = layer_1;
-            } else if(index > 127) {
+            } else if (index > 127) {
                 horizontal_deltas[index] = layer_2;
-            } else if(index > 118) {
+            } else if (index > 118) {
                 horizontal_deltas[index] = layer_3;
-            } else if(index > 0) {
+            } else if (index > 0) {
                 horizontal_deltas[index] = layer_4;
             } else {
                 horizontal_deltas[index] = 0;

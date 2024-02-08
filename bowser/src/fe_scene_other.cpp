@@ -41,7 +41,7 @@
 #include "bn_music_actions.h"
 
 namespace fe {
-Other::Other(Player& player)
+Other::Other(Player &player)
     : _player(&player) {}
 
 Scene Other::execute(bn::fixed_point spawn_location) {
@@ -86,7 +86,8 @@ Scene Other::execute(bn::fixed_point spawn_location) {
 
     // _player
     _player->spawn(spawn_location, camera, map, enemies);
-    while(true) {
+
+    while (true) {
 
         // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
         // --counter;
@@ -98,17 +99,19 @@ Scene Other::execute(bn::fixed_point spawn_location) {
         // }
 
         int enemy_count = 0;
-        for(Enemy& enemy : enemies) {
-            if(enemy.hp() > 0) {
+
+        for (Enemy &enemy : enemies) {
+            if (enemy.hp() > 0) {
                 ++enemy_count;
             }
         }
-        if(enemy_count > 0) {
+
+        if (enemy_count > 0) {
             _player->set_listening(false);
         }
 
-        for(Enemy& enemy : enemies) {
-            if(bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100) {
+        for (Enemy &enemy : enemies) {
+            if (bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100) {
                 enemy.update(_player->pos());
             } else {
                 enemy.set_visible(false);
@@ -119,13 +122,13 @@ Scene Other::execute(bn::fixed_point spawn_location) {
         _player->apply_animation_state();
         // BN_LOG(bn::to_string<32>(_player->pos().x())+", " + bn::to_string<32>(_player->pos().y()));
 
-        if(_player->pos().y() > 700) {
+        if (_player->pos().y() > 700) {
             _player->delete_data();
             return Scene::OTHER;
         }
 
-        if(_player->pos().y() == 152 && _player->pos().x() > 870) {
-            if(enemy_count < 1) {
+        if (_player->pos().y() == 152 && _player->pos().x() > 870) {
+            if (enemy_count < 1) {
                 scale_action = bn::sprite_scale_to_action(glow, 60, 2);
                 map.set_blending_enabled(true);
                 bg.set_blending_enabled(true);
@@ -134,17 +137,18 @@ Scene Other::execute(bn::fixed_point spawn_location) {
             }
         }
 
-        if(scale_action.has_value()) {
-            if(!scale_action.value().done()) {
+        if (scale_action.has_value()) {
+            if (!scale_action.value().done()) {
                 scale_action.value().update();
             }
         }
 
-        if(intensity_action.has_value()) {
-            if(!intensity_action.value().done()) {
+        if (intensity_action.has_value()) {
+            if (!intensity_action.value().done()) {
                 intensity_action.value().update();
                 kill_timer++;
-                if(kill_timer > 60) {
+
+                if (kill_timer > 60) {
                     bn::blending::set_fade_alpha(0);
                     _player->delete_data();
                     return Scene::OTHER_DUNGEON;

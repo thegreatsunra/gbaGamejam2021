@@ -35,7 +35,7 @@
 // #include "bn_music_actions.h"
 
 namespace fe {
-Path::Path(Player& player)
+Path::Path(Player &player)
     : _player(&player) {}
 
 Scene Path::execute(bn::fixed_point spawn_lobowserion) {
@@ -68,7 +68,8 @@ Scene Path::execute(bn::fixed_point spawn_lobowserion) {
 
     // player
     _player->spawn(spawn_lobowserion, camera, map, enemies);
-    while(true) {
+
+    while (true) {
 
         // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
         // --counter;
@@ -82,7 +83,7 @@ Scene Path::execute(bn::fixed_point spawn_lobowserion) {
         // explain_attack.update();
 
         //elevator.update_position();
-        _player->update_position(map,level);
+        _player->update_position(map, level);
         _player->apply_animation_state();
         // BN_LOG(bn::to_string<32>(_player->pos().x())+" " + bn::to_string<32>(_player->pos().y()));
 
@@ -96,8 +97,8 @@ Scene Path::execute(bn::fixed_point spawn_lobowserion) {
         //     }
         // }
 
-        for(Enemy& enemy : enemies) {
-            if(bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100) {
+        for (Enemy &enemy : enemies) {
+            if (bn::abs(enemy.pos().x() - camera.x()) < 200 && bn::abs(enemy.pos().y() - camera.y()) < 100) {
                 enemy.update(_player->pos());
             } else {
                 enemy.set_visible(false);
