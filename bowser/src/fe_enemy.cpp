@@ -90,15 +90,53 @@ Enemy::Enemy(int x, int y, bn::camera_ptr camera, bn::affine_bg_ptr map, ENEMY_T
 
     boss_tele_timer = 0;
 
-    if (_type == ENEMY_TYPE::MARIO) {
+    if (_type == ENEMY_TYPE::BAT) {
+        _sprite = bn::sprite_items::bat_sprite.create_sprite(_pos.x(), _pos.y());
+        _sprite.value().set_camera(_camera);
+        _sprite.value().set_bg_priority(1);
+        _action = bn::create_sprite_animate_action_forever(
+                      _sprite.value(), 4, bn::sprite_items::bat_sprite.tiles_item(), 0, 1, 0, 1);
+    } else if (_type == ENEMY_TYPE::MARIO) {
         _sprite = bn::sprite_items::mario_sprite.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(1);
         _action = bn::create_sprite_animate_action_forever(
                       _sprite.value(), 10, bn::sprite_items::mario_sprite.tiles_item(), 0, 1, 0, 1);
+    } else if (_type == ENEMY_TYPE::SLIMEO) {
+        _sprite = bn::sprite_items::mario_sprite_2.create_sprite(_pos.x(), _pos.y());
+        _sprite.value().set_camera(_camera);
+        _sprite.value().set_bg_priority(1);
+        _action = bn::create_sprite_animate_action_forever(
+                      _sprite.value(), 20, bn::sprite_items::mario_sprite_2.tiles_item(), 0, 1, 0, 1);
+    } else if (_type == ENEMY_TYPE::WALL) {
+        _sprite = bn::sprite_items::wall.create_sprite(_pos.x(), _pos.y());
+        _sprite.value().set_camera(_camera);
+        _sprite.value().set_bg_priority(1);
+        _action = bn::create_sprite_animate_action_forever(
+                      _sprite.value(), 20, bn::sprite_items::wall.tiles_item(), 0, 1, 0, 1);
+    } else if (_type == ENEMY_TYPE::BOSS) {
+        _sprite = bn::sprite_items::child.create_sprite(_pos.x(), _pos.y());
+        _sprite.value().set_camera(_camera);
+        _sprite.value().set_bg_priority(1);
+        _action = bn::create_sprite_animate_action_forever(
+                      _sprite.value(), 20, bn::sprite_items::child.tiles_item(), 1, 2, 3, 4);
+    } else if (_type == ENEMY_TYPE::RAT) {
+        _sprite = bn::sprite_items::rat.create_sprite(_pos.x(), _pos.y());
+        _sprite.value().set_camera(_camera);
+        _sprite.value().set_bg_priority(1);
+        _action = bn::create_sprite_animate_action_forever(
+                      _sprite.value(), 20, bn::sprite_items::rat.tiles_item(), 0, 1, 2, 3);
+    } else if (_type == ENEMY_TYPE::MUTANT) {
+        _sprite = bn::sprite_items::mutant.create_sprite(_pos.x(), _pos.y());
+        _sprite.value().set_camera(_camera);
+        _sprite.value().set_bg_priority(0);
+        _sprite.value().put_above();
+        _mutant_action = bn::create_sprite_animate_action_forever(
+                             _sprite.value(), 2, bn::sprite_items::mutant.tiles_item(), 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
     }
 
     _sprite.value().set_visible(true);
+
 }
 
 void Enemy::set_visible(bool visiblity) {
@@ -208,6 +246,21 @@ bool Enemy::_take_damage(int damage) {
             if (_type == ENEMY_TYPE::MARIO) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::mario_sprite.tiles_item(), 2, 3, 3, 3);
+            } else if (_type == ENEMY_TYPE::SLIMEO) {
+                _action = bn::create_sprite_animate_action_once(
+                              _sprite.value(), 5, bn::sprite_items::mario_sprite_2.tiles_item(), 2, 3, 3, 3);
+            } else if (_type == ENEMY_TYPE::BAT) {
+                _action = bn::create_sprite_animate_action_once(
+                              _sprite.value(), 5, bn::sprite_items::bat_sprite.tiles_item(), 2, 3, 3, 3);
+            } else if (_type == ENEMY_TYPE::BOSS) {
+                _action = bn::create_sprite_animate_action_once(
+                              _sprite.value(), 5, bn::sprite_items::child.tiles_item(), 5, 6, 7, 8);
+            } else if (_type == ENEMY_TYPE::WALL) {
+                _action = bn::create_sprite_animate_action_once(
+                              _sprite.value(), 5, bn::sprite_items::wall.tiles_item(), 2, 2, 3, 3);
+            } else if (_type == ENEMY_TYPE::RAT) {
+                _action = bn::create_sprite_animate_action_once(
+                              _sprite.value(), 10, bn::sprite_items::rat.tiles_item(), 4, 5, 6, 7);
             }
 
             return true;
@@ -219,7 +272,14 @@ bool Enemy::_take_damage(int damage) {
 
 bool Enemy::is_hit(Hitbox attack) {
     if (!_dead) {
-        return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 8);
+        if (_type == ENEMY_TYPE::BOSS) {
+            return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 16);
+        } else if (_type == ENEMY_TYPE::MUTANT) {
+            return check_collisions_bb(attack, _pos.x(), _pos.y() + 16, 50, 32);
+        } else {
+            return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 8);
+        }
+
     } else {
         return false;
     }
@@ -248,13 +308,35 @@ bool Enemy::_fall_check(bn::fixed x, bn::fixed y) {
 }
 
 bool Enemy::_will_fall() {
-    if (_dx < 0) { // left
-        if (!_check_collisions_map(_pos, Hitbox(-4, 8, 4, 8), directions::down, _map, _level, _map_cells)) {
-            return true;
+    if (_type == ENEMY_TYPE::BOSS) {
+        if (_dx < 0) { // left
+            if (!_check_collisions_map(_pos, Hitbox(-4, 16, 4, 8), directions::down, _map, _level, _map_cells)) {
+                return true;
+            }
+        } else { //right
+            if (!_check_collisions_map(_pos, Hitbox(4, 16, 4, 8), directions::down, _map, _level, _map_cells)) {
+                return true;
+            }
         }
-    } else { //right
-        if (!_check_collisions_map(_pos, Hitbox(4, 8, 4, 8), directions::down, _map, _level, _map_cells)) {
-            return true;
+    } else if (_type == ENEMY_TYPE::MUTANT) {
+        if (_dx < 0) { // left
+            if (!_check_collisions_map(_pos, Hitbox(-16, 32, 4, 8), directions::down, _map, _level, _map_cells)) {
+                return true;
+            }
+        } else { //right
+            if (!_check_collisions_map(_pos, Hitbox(16, 32, 4, 8), directions::down, _map, _level, _map_cells)) {
+                return true;
+            }
+        }
+    } else {
+        if (_dx < 0) { // left
+            if (!_check_collisions_map(_pos, Hitbox(-4, 8, 4, 8), directions::down, _map, _level, _map_cells)) {
+                return true;
+            }
+        } else { //right
+            if (!_check_collisions_map(_pos, Hitbox(4, 8, 4, 8), directions::down, _map, _level, _map_cells)) {
+                return true;
+            }
         }
     }
 
@@ -270,6 +352,10 @@ int Enemy::hp() {
 }
 
 void Enemy::set_pos(bn::fixed_point pos) {
+    if (_type == ENEMY_TYPE::MUTANT) {
+        bn::sound_items::growl.play();
+    }
+
     _pos = pos;
 }
 
@@ -300,6 +386,28 @@ void Enemy::update( bn::fixed_point player_pos) {
                 _inv_timer = 0;
                 _invulnerable = false;
             }
+        }
+
+        //apply gravity
+        if (_type != ENEMY_TYPE::BAT) {
+            _dy += gravity;
+        }
+
+        // Labrat spot player
+        if (_type == ENEMY_TYPE::RAT && !_spotted_player) {
+            //left
+            if (_sprite.value().horizontal_flip()) {
+                if (check_collisions_bb(Hitbox(_pos.x() - 40, _pos.y(), 80, 8), player_pos.x(), player_pos.y(), 16, 8)) {
+                    _spotted_player = true;
+                    bn::sound_items::eek.play(1);
+                }
+            } else { //right
+                if (check_collisions_bb(Hitbox(_pos.x() + 40, _pos.y(), 80, 8), player_pos.x(), player_pos.y(), 16, 8)) {
+                    _spotted_player = true;
+                    bn::sound_items::eek.play(1);
+                }
+            }
+
         }
 
         if (_type == ENEMY_TYPE::MARIO || _type == ENEMY_TYPE::SLIMEO || _type == ENEMY_TYPE::RAT || _type == ENEMY_TYPE::BOSS || _type == ENEMY_TYPE::MUTANT) {
@@ -383,6 +491,31 @@ void Enemy::update( bn::fixed_point player_pos) {
                     }
                 }
 
+                if (_type == ENEMY_TYPE::MUTANT) {
+                    ++jump_timer;
+
+                    if (jump_timer > time_to_jump) {
+                        if (!is_tired) {
+                            time_to_jump = random.get() % 32 * 8 + 100;
+                            _dy = -6;
+                            _grounded = false;
+                        }
+
+                        jump_timer = 0;
+
+                    }
+
+                    ++sleep_timer;
+
+                    if (is_tired && sleep_timer > 180) {
+                        is_tired = false;
+                        sleep_timer = 0;
+                    } else if (!is_tired && sleep_timer > time_to_sleep) {
+                        is_tired = true;
+                        sleep_timer = 0;
+                    }
+                }
+
                 if (!_invulnerable && _grounded && _type != ENEMY_TYPE::MUTANT) {
                     _dx += _dir * acc;
                 }
@@ -392,6 +525,19 @@ void Enemy::update( bn::fixed_point player_pos) {
                 }
             }
 
+        } else if (_type == ENEMY_TYPE::BAT) {
+            if (_direction_timer > 60) {
+                if (_will_hit_wall()) {
+                    _dx = 0;
+                    _dir = -_dir;
+                    _direction_timer = 0;
+                    _sprite.value().set_horizontal_flip(!_sprite.value().horizontal_flip());
+                }
+            }
+
+            if (!_invulnerable) {
+                _dx += _dir * acc;
+            }
         }
 
         _dx = _dx * friction;
@@ -404,13 +550,33 @@ void Enemy::update( bn::fixed_point player_pos) {
 
         //fall
         if (_dy > 0) {
-            if (_check_collisions_map(_pos, Hitbox(0, 8, 8, 0), directions::down, _map, _level, _map_cells)) {
-                _dy = 0;
-                // BN_LOG(bn::to_string<32>(_pos.x())+" " + bn::to_string<32>(_pos.y()));
-                _pos.set_y(_pos.y() - modulo(_pos.y(), 8));
-                _grounded = true;
+            if (_type == ENEMY_TYPE::BOSS) {
+                if (_check_collisions_map(_pos, Hitbox(0, 16, 8, 0), directions::down, _map, _level, _map_cells)) {
+                    _dy = 0;
+                    // BN_LOG(bn::to_string<32>(_pos.x())+" " + bn::to_string<32>(_pos.y()));
+                    _pos.set_y(_pos.y() - modulo(_pos.y(), 8));
+                    _grounded = true;
+                } else {
+                    _grounded = false;
+                }
+            } else if (_type == ENEMY_TYPE::MUTANT) {
+                if (_check_collisions_map(_pos, Hitbox(0, 32, 32, 0), directions::down, _map, _level, _map_cells)) {
+                    _dy = 0;
+                    // BN_LOG(bn::to_string<32>(_pos.x())+" " + bn::to_string<32>(_pos.y()));
+                    _pos.set_y(_pos.y() - modulo(_pos.y(), 8));
+                    _grounded = true;
+                } else {
+                    _grounded = false;
+                }
             } else {
-                _grounded = false;
+                if (_check_collisions_map(_pos, Hitbox(0, 8, 8, 0), directions::down, _map, _level, _map_cells)) {
+                    _dy = 0;
+                    // BN_LOG(bn::to_string<32>(_pos.x())+" " + bn::to_string<32>(_pos.y()));
+                    _pos.set_y(_pos.y() - modulo(_pos.y(), 8));
+                    _grounded = true;
+                } else {
+                    _grounded = false;
+                }
             }
 
         }
@@ -420,6 +586,35 @@ void Enemy::update( bn::fixed_point player_pos) {
             if (_check_collisions_map(_pos, Hitbox(0, 0, 4, 8), directions::left, _map, _level, _map_cells)) {
                 _dx = -_dx;
                 // _direction_timer = 0;
+            }
+        }
+
+        //ANIMATION
+        if (_type == ENEMY_TYPE::MUTANT) {
+            if (is_tired) {
+                if (_mutant_action.value().graphics_indexes().front() == 17 && _mutant_action.value().done()) {
+                    is_tired = false;
+                    bn::sound_items::growl.play(1);
+
+                } else if (_mutant_action.value().graphics_indexes().front() != 15 && _mutant_action.value().graphics_indexes().front() != 17) {
+                    _mutant_action = bn::create_sprite_animate_action_forever(
+                                         _sprite.value(), 10, bn::sprite_items::mutant.tiles_item(), 15, 16, 15, 16, 15, 16, 15, 16, 15, 16);
+                }
+            } else {
+                if (!_grounded) {
+                    if (_dy < 0) {
+                        _mutant_action = bn::create_sprite_animate_action_forever(
+                                             _sprite.value(), 2, bn::sprite_items::mutant.tiles_item(), 13, 13, 13, 13, 13, 13, 13, 13, 13, 13);
+                    } else {
+                        _mutant_action = bn::create_sprite_animate_action_forever(
+                                             _sprite.value(), 2, bn::sprite_items::mutant.tiles_item(), 14, 14, 14, 14, 14, 14, 14, 14, 14, 14);
+                    }
+                } else if (_mutant_action.value().graphics_indexes().front() != 3) {
+                    _mutant_action = bn::create_sprite_animate_action_forever(
+                                         _sprite.value(), 2, bn::sprite_items::mutant.tiles_item(), 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+                } else if (_mutant_action.value().current_index() == 3) {
+                    bn::sound_items::steps.play(1);
+                }
             }
         }
 
