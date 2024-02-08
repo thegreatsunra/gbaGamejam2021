@@ -416,36 +416,6 @@ void Player::update_position(bn::affine_bg_ptr map, fe::Level level) {
         attack();
     }
 
-    // teleport
-    if (bn::keypad::l_pressed() && !_listening) {
-        if (_can_teleport) {
-            // BN_LOG(_tele_sprite.position().x());
-            _tele_sprite.set_position(_pos);
-            _tele_sprite.set_visible(true);
-            _tele_sprite.set_horizontal_flip(!is_right());
-            bn::sound_items::teleport.play();
-            int dist_to_wall = 80;
-
-            if (is_right()) {
-                for (int index = 80; index > 0; index -= 4) {
-                    if (check_collisions_map(bn::fixed_point(_pos.x() + index, _pos.y()), right, _hitbox_right, map, level, _map_cells.value())) {
-                        dist_to_wall = index - 4;
-                    }
-                }
-
-                _pos.set_x(_pos.x() + dist_to_wall);
-            } else {
-                for (int index = 80; index > 0; index -= 4) {
-                    if (check_collisions_map(bn::fixed_point(_pos.x() - index, _pos.y()), right, _hitbox_right, map, level, _map_cells.value())) {
-                        dist_to_wall = index - 4;
-                    }
-                }
-
-                _pos.set_x(_pos.x() - dist_to_wall);
-            }
-        }
-    }
-
     check_attack();
 
     // collide

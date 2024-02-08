@@ -90,49 +90,13 @@ Enemy::Enemy(int x, int y, bn::camera_ptr camera, bn::affine_bg_ptr map, ENEMY_T
 
     boss_tele_timer = 0;
 
-    if (_type == ENEMY_TYPE::BAT) {
-        _sprite = bn::sprite_items::bat_sprite.create_sprite(_pos.x(), _pos.y());
-        _sprite.value().set_camera(_camera);
-        _sprite.value().set_bg_priority(1);
-        _action = bn::create_sprite_animate_action_forever(
-                      _sprite.value(), 4, bn::sprite_items::bat_sprite.tiles_item(), 0, 1, 0, 1);
-    } else if (_type == ENEMY_TYPE::MARIO) {
+
+    if (_type == ENEMY_TYPE::MARIO) {
         _sprite = bn::sprite_items::mario_sprite.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(1);
         _action = bn::create_sprite_animate_action_forever(
                       _sprite.value(), 10, bn::sprite_items::mario_sprite.tiles_item(), 0, 1, 0, 1);
-    } else if (_type == ENEMY_TYPE::SLIMEO) {
-        _sprite = bn::sprite_items::mario_sprite_2.create_sprite(_pos.x(), _pos.y());
-        _sprite.value().set_camera(_camera);
-        _sprite.value().set_bg_priority(1);
-        _action = bn::create_sprite_animate_action_forever(
-                      _sprite.value(), 20, bn::sprite_items::mario_sprite_2.tiles_item(), 0, 1, 0, 1);
-    } else if (_type == ENEMY_TYPE::WALL) {
-        _sprite = bn::sprite_items::wall.create_sprite(_pos.x(), _pos.y());
-        _sprite.value().set_camera(_camera);
-        _sprite.value().set_bg_priority(1);
-        _action = bn::create_sprite_animate_action_forever(
-                      _sprite.value(), 20, bn::sprite_items::wall.tiles_item(), 0, 1, 0, 1);
-    } else if (_type == ENEMY_TYPE::BOSS) {
-        _sprite = bn::sprite_items::child.create_sprite(_pos.x(), _pos.y());
-        _sprite.value().set_camera(_camera);
-        _sprite.value().set_bg_priority(1);
-        _action = bn::create_sprite_animate_action_forever(
-                      _sprite.value(), 20, bn::sprite_items::child.tiles_item(), 1, 2, 3, 4);
-    } else if (_type == ENEMY_TYPE::RAT) {
-        _sprite = bn::sprite_items::rat.create_sprite(_pos.x(), _pos.y());
-        _sprite.value().set_camera(_camera);
-        _sprite.value().set_bg_priority(1);
-        _action = bn::create_sprite_animate_action_forever(
-                      _sprite.value(), 20, bn::sprite_items::rat.tiles_item(), 0, 1, 2, 3);
-    } else if (_type == ENEMY_TYPE::MUTANT) {
-        _sprite = bn::sprite_items::mutant.create_sprite(_pos.x(), _pos.y());
-        _sprite.value().set_camera(_camera);
-        _sprite.value().set_bg_priority(0);
-        _sprite.value().put_above();
-        _mutant_action = bn::create_sprite_animate_action_forever(
-                             _sprite.value(), 2, bn::sprite_items::mutant.tiles_item(), 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
     }
 
     _sprite.value().set_visible(true);
@@ -246,21 +210,6 @@ bool Enemy::_take_damage(int damage) {
             if (_type == ENEMY_TYPE::MARIO) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::mario_sprite.tiles_item(), 2, 3, 3, 3);
-            } else if (_type == ENEMY_TYPE::SLIMEO) {
-                _action = bn::create_sprite_animate_action_once(
-                              _sprite.value(), 5, bn::sprite_items::mario_sprite_2.tiles_item(), 2, 3, 3, 3);
-            } else if (_type == ENEMY_TYPE::BAT) {
-                _action = bn::create_sprite_animate_action_once(
-                              _sprite.value(), 5, bn::sprite_items::bat_sprite.tiles_item(), 2, 3, 3, 3);
-            } else if (_type == ENEMY_TYPE::BOSS) {
-                _action = bn::create_sprite_animate_action_once(
-                              _sprite.value(), 5, bn::sprite_items::child.tiles_item(), 5, 6, 7, 8);
-            } else if (_type == ENEMY_TYPE::WALL) {
-                _action = bn::create_sprite_animate_action_once(
-                              _sprite.value(), 5, bn::sprite_items::wall.tiles_item(), 2, 2, 3, 3);
-            } else if (_type == ENEMY_TYPE::RAT) {
-                _action = bn::create_sprite_animate_action_once(
-                              _sprite.value(), 10, bn::sprite_items::rat.tiles_item(), 4, 5, 6, 7);
             }
 
             return true;
@@ -272,13 +221,7 @@ bool Enemy::_take_damage(int damage) {
 
 bool Enemy::is_hit(Hitbox attack) {
     if (!_dead) {
-        if (_type == ENEMY_TYPE::BOSS) {
-            return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 16);
-        } else if (_type == ENEMY_TYPE::MUTANT) {
-            return check_collisions_bb(attack, _pos.x(), _pos.y() + 16, 50, 32);
-        } else {
-            return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 8);
-        }
+        return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 8);
 
     } else {
         return false;
@@ -352,10 +295,6 @@ int Enemy::hp() {
 }
 
 void Enemy::set_pos(bn::fixed_point pos) {
-    if (_type == ENEMY_TYPE::MUTANT) {
-        bn::sound_items::growl.play();
-    }
-
     _pos = pos;
 }
 
@@ -391,23 +330,6 @@ void Enemy::update( bn::fixed_point player_pos) {
         //apply gravity
         if (_type != ENEMY_TYPE::BAT) {
             _dy += gravity;
-        }
-
-        // Labrat spot player
-        if (_type == ENEMY_TYPE::RAT && !_spotted_player) {
-            //left
-            if (_sprite.value().horizontal_flip()) {
-                if (check_collisions_bb(Hitbox(_pos.x() - 40, _pos.y(), 80, 8), player_pos.x(), player_pos.y(), 16, 8)) {
-                    _spotted_player = true;
-                    bn::sound_items::eek.play(1);
-                }
-            } else { //right
-                if (check_collisions_bb(Hitbox(_pos.x() + 40, _pos.y(), 80, 8), player_pos.x(), player_pos.y(), 16, 8)) {
-                    _spotted_player = true;
-                    bn::sound_items::eek.play(1);
-                }
-            }
-
         }
 
         if (_type == ENEMY_TYPE::MARIO || _type == ENEMY_TYPE::SLIMEO || _type == ENEMY_TYPE::RAT || _type == ENEMY_TYPE::BOSS || _type == ENEMY_TYPE::MUTANT) {
