@@ -69,7 +69,7 @@ public:
 
     [[nodiscard]] bn::fixed_point pos();
 
-    void jump(bn::affine_bg_ptr map, fe::Level level);
+    void jump();
     void attack();
     void collide_with_objects(bn::affine_bg_ptr map, fe::Level level);
     void collide_with_enemies();

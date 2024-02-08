@@ -169,28 +169,10 @@ bool Player::is_listening() {
     return _listening;
 }
 
-void Player::jump(bn::affine_bg_ptr map, fe::Level level) {
-    if (!_listening) {
-        if (_grounded && !_listening) {
-            _dy -= jump_power;
-            _grounded = false;
-        } else if (_can_teleport) {
-            _tele_sprite.set_position(_pos);
-            _tele_sprite.set_visible(true);
-            _tele_sprite.set_horizontal_flip(!is_right());
-            bn::sound_items::teleport.play();
-            int dist_up = 80;
-            _dy = -1;
-
-            for (int index = 80; index > 0; index -= 4) {
-                if (check_collisions_map(bn::fixed_point(_pos.x(), _pos.y() - index), up, _hitbox_jump, map, level, _map_cells.value())) {
-                    dist_up = index - 4;
-                }
-            }
-
-            _pos.set_y(_pos.y() - dist_up);
-        }
-
+void Player::jump() {
+    if (_grounded) {
+        _dy -= jump_power;
+        _grounded = false;
     }
 }
 
@@ -400,19 +382,13 @@ void Player::update_position(bn::affine_bg_ptr map, fe::Level level) {
         }
     }
 
-    if (_listening) {
-        _text_bg1.set_position(_camera.value().x() + 64 + 8, _camera.value().y() + 40 + 24);
-        _text_bg2.set_position(_camera.value().x() - 64 + 8, _camera.value().y() + 40 + 24);
-        _skip.set_position(_camera.value().x() + 64 + 8 + 16, _camera.value().y() + 40 + 24 - 18);
-    }
-
     // jump
-    if (bn::keypad::a_pressed() && !_listening) {
-        jump(map, level);
+    if (bn::keypad::a_pressed()) {
+        jump();
     }
 
     // attack
-    if (bn::keypad::b_pressed() && !_listening) {
+    if (bn::keypad::b_pressed()) {
         attack();
     }
 
