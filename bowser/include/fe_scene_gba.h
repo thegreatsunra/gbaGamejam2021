@@ -5,7 +5,7 @@
 
 namespace fe {
 class GBA {
-  public:
+public:
     Scene execute();
 };
 }

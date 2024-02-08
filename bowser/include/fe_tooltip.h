@@ -16,7 +16,7 @@
 
 namespace fe {
 class Tooltip {
-  private:
+private:
     bn::fixed_point _pos;
     bool _is_talking = false;
     bool _finished = false;
@@ -29,7 +29,7 @@ class Tooltip {
     int _currentChar = 0;
     bn::string_view _currentChars = "";
 
-  public:
+public:
     Tooltip(bn::fixed_point pos, bn::string_view line, bn::sprite_text_generator& text_generator);
     void update();
     bool check_trigger(bn::fixed_point pos);

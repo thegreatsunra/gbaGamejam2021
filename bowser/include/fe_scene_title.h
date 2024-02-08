@@ -5,7 +5,7 @@
 
 namespace fe {
 class Title {
-  public:
+public:
     Scene execute();
 };
 }

@@ -5,7 +5,7 @@
 
 namespace fe {
 class Loading {
-  public:
+public:
     void execute(Scene next_scene);
 };
 }

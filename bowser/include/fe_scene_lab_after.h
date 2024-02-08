@@ -7,9 +7,9 @@
 
 namespace fe {
 class LabAfter {
-  private:
+private:
     Player* _player;
-  public:
+public:
     LabAfter(Player& player);
     Scene execute( bn::fixed_point spawn);
 };

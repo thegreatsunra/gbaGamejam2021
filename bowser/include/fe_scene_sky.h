@@ -7,9 +7,9 @@
 
 namespace fe {
 class Sky {
-  private:
+private:
     Player* _player;
-  public:
+public:
     Sky(Player& player);
     Scene execute(bn::fixed_point spawn);
 };

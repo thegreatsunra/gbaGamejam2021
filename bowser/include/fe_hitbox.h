@@ -6,12 +6,12 @@
 
 namespace fe {
 class Hitbox {
-  private:
+private:
     bn::fixed_point _pos;
     bn::fixed _width;
     bn::fixed _height;
 
-  public:
+public:
     Hitbox();
     Hitbox(bn::fixed x, bn::fixed y, bn::fixed width, bn::fixed height);
 

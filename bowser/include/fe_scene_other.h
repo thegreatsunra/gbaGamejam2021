@@ -7,9 +7,9 @@
 
 namespace fe {
 class Other {
-  private:
+private:
     Player* _player;
-  public:
+public:
     Other(Player& player);
     Scene execute( bn::fixed_point spawn);
 };

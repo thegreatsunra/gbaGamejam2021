@@ -3,7 +3,7 @@
 
 namespace fe {
 class Data {
-  public:
+public:
     Data();
     bool learned_attack;
     bool learned_wallrun;

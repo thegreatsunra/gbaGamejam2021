@@ -20,7 +20,7 @@
 
 namespace fe {
 class Enemy {
-  private:
+private:
     bn::fixed_point _pos;
     bn::fixed _dy = 0;
     bn::fixed _dx = 0;
@@ -53,7 +53,7 @@ class Enemy {
     bool _will_fall();
     bool _fall_check(bn::fixed x, bn::fixed y);
 
-  public:
+public:
     Enemy(int x, int y, bn::camera_ptr camera, bn::affine_bg_ptr map, ENEMY_TYPE type, int hp);
     void update(bn::fixed_point player_pos);
     bn::fixed_point pos();

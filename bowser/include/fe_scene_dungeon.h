@@ -7,9 +7,9 @@
 
 namespace fe {
 class Dungeon {
-  private:
+private:
     Player* _player;
-  public:
+public:
     Dungeon(Player& player);
     Scene execute(bn::fixed_point spawn);
 };

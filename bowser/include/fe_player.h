@@ -18,7 +18,7 @@
 
 namespace fe {
 class Player {
-  private:
+private:
     bn::sprite_ptr _sprite;
     bn::sprite_ptr _tele_sprite;
     bn::fixed _dx;
@@ -61,7 +61,7 @@ class Player {
     bn::optional<bn::sprite_animate_action<4>> _spin_action;
     void _update_camera(int lerp);
 
-  public:
+public:
     Player(bn::sprite_ptr sprite);
 
     void hide();

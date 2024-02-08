@@ -19,7 +19,7 @@
 
 namespace fe {
 class StorySave {
-  private:
+private:
     STORY_TYPE _type;
     bn::fixed_point _pos;
     bn::camera_ptr& _camera;
@@ -40,7 +40,7 @@ class StorySave {
     bn::sprite_text_generator& _text_generator;
     bn::vector<bn::sprite_ptr, 12> _text_sprites;
 
-  public:
+public:
     StorySave(bn::fixed_point pos, STORY_TYPE type, bn::camera_ptr& camera, bn::sprite_text_generator& text_generator);
     void update();
     bool check_trigger(bn::fixed_point player_pos);
