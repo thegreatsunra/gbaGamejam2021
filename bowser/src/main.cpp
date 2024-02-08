@@ -33,8 +33,7 @@
 
 #include "bn_sprite_items_bowser_sprite.h"
 
-int main()
-{
+int main() {
     bn::core::init();
     // fe::Scene scene = fe::Scene::GBA;
 
@@ -42,8 +41,7 @@ int main()
     bowser_sprite.set_visible(false);
     fe::Player player = fe::Player(bowser_sprite);
 
-    while(true)
-    {
+    while(true) {
         fe::Path path = fe::Path(player);
         path.execute(bn::fixed_point(100, 540));
         // if(scene == fe::Scene::PATH_START){

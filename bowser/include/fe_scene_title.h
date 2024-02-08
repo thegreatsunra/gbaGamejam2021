@@ -3,11 +3,9 @@
 
 #include "fe_scene.h"
 
-namespace fe
-{
-class Title
-{
-public:
+namespace fe {
+class Title {
+  public:
     Scene execute();
 };
 }

@@ -33,16 +33,13 @@
 #include "bn_sprite_text_generator.h"
 // #include "variable_8x8_sprite_font.h"
 
-namespace fe
-{
+namespace fe {
 
-Scene GBA::execute()
-{
+Scene GBA::execute() {
 
     bn::regular_bg_ptr map = bn::regular_bg_items::splash.create_bg(0, 0);
     int timer = 0;
-    while(true)
-    {
+    while(true) {
         if(timer > 90) {
             return Scene::TITLE;
         }

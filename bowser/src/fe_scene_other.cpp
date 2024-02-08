@@ -40,13 +40,11 @@
 #include "bn_music_items.h"
 #include "bn_music_actions.h"
 
-namespace fe
-{
+namespace fe {
 Other::Other(Player& player)
     : _player(&player) {}
 
-Scene Other::execute(bn::fixed_point spawn_location)
-{
+Scene Other::execute(bn::fixed_point spawn_location) {
     bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
     bn::music_items::sanctuary.play();
@@ -88,8 +86,7 @@ Scene Other::execute(bn::fixed_point spawn_location)
 
     // _player
     _player->spawn(spawn_location, camera, map, enemies);
-    while(true)
-    {
+    while(true) {
 
         // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
         // --counter;

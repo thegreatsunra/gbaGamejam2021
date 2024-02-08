@@ -5,13 +5,11 @@
 #include "fe_player.h"
 #include "bn_fixed_point.h"
 
-namespace fe
-{
-class SkyReturn
-{
-private:
+namespace fe {
+class SkyReturn {
+  private:
     Player* _player;
-public:
+  public:
     SkyReturn(Player& player);
     Scene execute(bn::fixed_point spawn);
 };

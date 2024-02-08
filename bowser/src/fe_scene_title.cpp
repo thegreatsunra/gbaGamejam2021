@@ -31,8 +31,7 @@
 
 #include "bn_music_items.h"
 
-namespace fe
-{
+namespace fe {
 bn::fixed loop(bn::fixed number, bn::fixed increment) {
     number += increment;
     if(number > 256) {
@@ -42,8 +41,7 @@ bn::fixed loop(bn::fixed number, bn::fixed increment) {
     }
 }
 
-Scene Title::execute()
-{
+Scene Title::execute() {
     // map
     bn::regular_bg_ptr map = bn::regular_bg_items::title.create_bg(0, 0);
 
@@ -90,8 +88,7 @@ Scene Title::execute()
 
     int timer = 0;
 
-    while(!(bn::keypad::any_pressed() && timer > 60))
-    {
+    while(!(bn::keypad::any_pressed() && timer > 60)) {
         // bowser_sprite.set_x(bowser_sprite.x() + 1.3);
 
         ++timer;
@@ -109,24 +106,16 @@ Scene Title::execute()
         start2.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
         start3.set_y(start_y + bn::degrees_lut_sin(start_amp*1)*4);
 
-        for(int index = 0, limit = 160; index < limit; ++index)
-        {
+        for(int index = 0, limit = 160; index < limit; ++index) {
             if( index > 140) {
                 horizontal_deltas[index] = layer_1;
-            }
-            else if(index > 127)
-            {
+            } else if(index > 127) {
                 horizontal_deltas[index] = layer_2;
-            }
-            else if(index > 118)
-            {
+            } else if(index > 118) {
                 horizontal_deltas[index] = layer_3;
-            }
-            else if(index > 0)
-            {
+            } else if(index > 0) {
                 horizontal_deltas[index] = layer_4;
-            }
-            else {
+            } else {
                 horizontal_deltas[index] = 0;
             }
         }

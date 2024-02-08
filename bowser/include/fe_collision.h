@@ -14,8 +14,7 @@
 #include "fe_hitbox.h"
 #include "fe_level.h"
 
-namespace fe
-{
+namespace fe {
 
 [[nodiscard]] bool check_collisions_bb(Hitbox boxA, Hitbox boxB) {
     bool result =  boxA.x() - boxA.width()/2 < boxB.x() + boxB.width()/2 &&

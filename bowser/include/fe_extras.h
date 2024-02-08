@@ -3,10 +3,8 @@
 
 #include "bn_fixed_point.h"
 
-namespace fe
-{
-[[nodiscard]] constexpr bn::fixed modulo(bn::fixed a, bn::fixed m)
-{
+namespace fe {
+[[nodiscard]] constexpr bn::fixed modulo(bn::fixed a, bn::fixed m) {
     return a - m * ((a/m).integer());
 }
 }

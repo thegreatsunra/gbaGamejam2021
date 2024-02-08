@@ -30,14 +30,12 @@
 #include "bn_music_items.h"
 #include "bn_music_actions.h"
 
-namespace fe
-{
+namespace fe {
 
 Sky::Sky(Player& player)
     : _player(&player) {}
 
-Scene Sky::execute(bn::fixed_point spawn_location)
-{
+Scene Sky::execute(bn::fixed_point spawn_location) {
     bn::camera_ptr camera = bn::camera_ptr::create(spawn_location.x(), spawn_location.y());
 
     bn::music_items::piana.play();
@@ -61,8 +59,7 @@ Scene Sky::execute(bn::fixed_point spawn_location)
 
     // _player
     _player->spawn(spawn_location, camera, map, enemies);
-    while(true)
-    {
+    while(true) {
 
         // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
         // --counter;
@@ -79,8 +76,7 @@ Scene Sky::execute(bn::fixed_point spawn_location)
         _player->apply_animation_state();
         // BN_LOG(bn::to_string<32>(_player->pos().x())+" " + bn::to_string<32>(_player->pos().y()));
 
-        if(bn::keypad::up_pressed())
-        {
+        if(bn::keypad::up_pressed()) {
             if(_player->pos().x() < 185 && _player->pos().x() > 155) {
                 if(_player->pos().y() < 644 && _player->pos().y() > 614) {
                     _player->delete_data();

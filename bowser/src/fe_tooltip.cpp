@@ -10,12 +10,10 @@
 #include "bn_sprite_items_tortoise_sprite.h"
 #include "bn_sprite_items_penguin_sprite.h"
 
-namespace fe
-{
+namespace fe {
 
 Tooltip::Tooltip(bn::fixed_point pos, bn::string_view line, bn::sprite_text_generator& text_generator) :
-    _pos(pos), _line(line), _text_generator(text_generator)
-{
+    _pos(pos), _line(line), _text_generator(text_generator) {
     _text_generator.set_left_alignment();
     _text_generator.set_bg_priority(0);
 }
@@ -24,8 +22,7 @@ void Tooltip::update() {
     _text_generator.set_left_alignment();
     if(_is_talking) {
         if(_currentChar == _line.size()) {
-            if(bn::keypad::a_pressed())
-            {
+            if(bn::keypad::a_pressed()) {
                 _is_talking = false;
                 _finished = true;
                 _currentChar = 0;

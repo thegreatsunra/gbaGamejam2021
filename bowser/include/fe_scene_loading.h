@@ -3,11 +3,9 @@
 
 #include "fe_scene.h"
 
-namespace fe
-{
-class Loading
-{
-public:
+namespace fe {
+class Loading {
+  public:
     void execute(Scene next_scene);
 };
 }

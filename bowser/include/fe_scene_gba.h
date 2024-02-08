@@ -3,11 +3,9 @@
 
 #include "fe_scene.h"
 
-namespace fe
-{
-class GBA
-{
-public:
+namespace fe {
+class GBA {
+  public:
     Scene execute();
 };
 }

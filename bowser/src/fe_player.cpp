@@ -27,31 +27,25 @@
 #include "bn_affine_bg_items_path.h"
 #include "bn_sound_items.h"
 
-namespace fe
-{
+namespace fe {
 enum directions {up, down, left, right};
 
-[[nodiscard]] int get_map_cell(bn::fixed x, bn::fixed y, bn::affine_bg_ptr& map, bn::span<const bn::affine_bg_map_cell> cells)
-{
+[[nodiscard]] int get_map_cell(bn::fixed x, bn::fixed y, bn::affine_bg_ptr& map, bn::span<const bn::affine_bg_map_cell> cells) {
     int map_size = map.dimensions().width();
     int cell =  modulo((y.safe_division(8).right_shift_integer() * map_size/8 + x/8), map_size*8).integer();
     return cells.at(cell);
 }
 
-[[nodiscard]] bool contains_cell(int tile, bn::vector<int, 32> tiles)
-{
-    for(int index = 0; index < tiles.size(); ++index)
-    {
-        if(tiles.at(index) == tile)
-        {
+[[nodiscard]] bool contains_cell(int tile, bn::vector<int, 32> tiles) {
+    for(int index = 0; index < tiles.size(); ++index) {
+        if(tiles.at(index) == tile) {
             return true;
         }
     }
     return false;
 }
 
-[[nodiscard]] bool check_collisions_map(bn::fixed_point pos, directions direction, Hitbox hitbox,bn::affine_bg_ptr& map, fe::Level level, bn::span<const bn::affine_bg_map_cell> cells)
-{
+[[nodiscard]] bool check_collisions_map(bn::fixed_point pos, directions direction, Hitbox hitbox,bn::affine_bg_ptr& map, fe::Level level, bn::span<const bn::affine_bg_map_cell> cells) {
     bn::fixed l = pos.x() - hitbox.width() / 2 + hitbox.x();
     bn::fixed r = pos.x() + hitbox.width() / 2 + hitbox.x();
     bn::fixed u = pos.y() - hitbox.height() / 2 + hitbox.y();
@@ -91,8 +85,7 @@ Player::Player(bn::sprite_ptr sprite) :
     _text_bg2(bn::sprite_items::text_bg.create_sprite(0, 0)),
     _skip(bn::sprite_items::skip.create_sprite(0, 0)),
     _data(fe::Data()),
-    _map(bn::affine_bg_items::path.create_bg(0, 0))
-{
+    _map(bn::affine_bg_items::path.create_bg(0, 0)) {
     _map.value().set_visible(false); // why can't I leave something uninitialised
     _sprite.put_above();
     _sprite.set_visible(false);
@@ -159,26 +152,22 @@ void Player::reset() {
     _attacking = false;
 }
 
-bn::fixed_point Player::pos()
-{
+bn::fixed_point Player::pos() {
     return _pos;
 }
 
-void Player::set_listening(bool is_listening)
-{
+void Player::set_listening(bool is_listening) {
     _listening = is_listening;
     _text_bg1.set_visible(_listening);
     _text_bg2.set_visible(_listening);
     _skip.set_visible(_listening);
 }
 
-bool Player::is_listening()
-{
+bool Player::is_listening() {
     return _listening;
 }
 
-void Player::jump(bn::affine_bg_ptr map, fe::Level level)
-{
+void Player::jump(bn::affine_bg_ptr map, fe::Level level) {
     if(!_listening) {
         if(_grounded && !_listening) {
             _dy-= jump_power;
@@ -201,14 +190,12 @@ void Player::jump(bn::affine_bg_ptr map, fe::Level level)
     }
 }
 
-void Player::attack()
-{
+void Player::attack() {
     _attacking = true;
     bn::sound_items::swipe.play();
 }
 
-bool Player::is_right()
-{
+bool Player::is_right() {
     return !_sprite.horizontal_flip();
 }
 
@@ -221,10 +208,8 @@ void Player::check_attack() {
             attack_hitbox.set_x(_pos.x() + 8);
         }
 
-        for(int i = 0; i < _enemies.value()->size(); i++)
-        {
-            if(_enemies.value()->at(i).is_vulnerable() && _enemies.value()->at(i).is_hit(attack_hitbox))
-            {
+        for(int i = 0; i < _enemies.value()->size(); i++) {
+            if(_enemies.value()->at(i).is_vulnerable() && _enemies.value()->at(i).is_hit(attack_hitbox)) {
                 if(_sprite.horizontal_flip()) {
                     _enemies.value()->at(i).damage_from_left(1);
                     if(_enemies.value()->at(i).type() == ENEMY_TYPE::SLIMEO) {
@@ -245,13 +230,10 @@ void Player::check_attack() {
 
 void Player::collide_with_enemies() {
     Hitbox collide_hitbox = Hitbox(_pos.x(),_pos.y()+2, 8, 12);
-    for(int i = 0; i < _enemies.value()->size(); i++)
-    {
+    for(int i = 0; i < _enemies.value()->size(); i++) {
         if(_enemies.value()->at(i).type() == ENEMY_TYPE::MUTANT && _enemies.value()->at(i).is_vulnerable()) {
             // mutant cat boss is sleeping
-        }
-        else if(_enemies.value()->at(i).is_hit(collide_hitbox))
-        {
+        } else if(_enemies.value()->at(i).is_hit(collide_hitbox)) {
             if(!_invulnerable && _enemies.value()->at(i).hp() > 0 && _enemies.value()->at(i).type() != ENEMY_TYPE::RAT) {
                 _invulnerable = true;
                 _dy -= 0.3;
@@ -277,33 +259,26 @@ void Player::collide_with_objects(bn::affine_bg_ptr map, fe::Level level) {
             _dy = max_dy;
         }
 
-        if(check_collisions_map(_pos, down, _hitbox_fall, map, level, _map_cells.value()))
-        {
+        if(check_collisions_map(_pos, down, _hitbox_fall, map, level, _map_cells.value())) {
             _grounded = true;
             _falling = false;
             _dy = 0;
             _pos.set_y(_pos.y() - modulo(_pos.y(),8));
             //todo if they pressed jump a few milliseconds before hitting the ground then jump now
         }
-    }
-    else if(_dy < 0) // jumping
-    {
+    } else if(_dy < 0) { // jumping
         _jumping = true;
         _falling = false;
-        if(check_collisions_map(_pos, up, _hitbox_jump, map, level, _map_cells.value()))
-        {
+        if(check_collisions_map(_pos, up, _hitbox_jump, map, level, _map_cells.value())) {
             _dy = 0;
         }
     }
 
-    if(_dx > 0) // moving right
-    {
+    if(_dx > 0) { // moving right
         if(check_collisions_map(_pos, right,_hitbox_right, map, level, _map_cells.value())) {
             _dx = 0;
         }
-    }
-    else if (_dx < 0) // moving left
-    {
+    } else if (_dx < 0) { // moving left
         if(check_collisions_map(_pos, left, _hitbox_left, map, level, _map_cells.value())) {
             _dx = 0;
         }
@@ -367,14 +342,11 @@ void Player::apply_animation_state() {
 
 void Player::_update_camera(int lerp) {
     // update camera
-    if(_pos.x() < 122+30)
-    {
+    if(_pos.x() < 122+30) {
         _camera.value().set_x(_camera.value().x()+ (122-_camera.value().x()) /lerp);
     } else if (_pos.x() > 922-30) {
         _camera.value().set_x(_camera.value().x()+ (922-20-_camera.value().x()) /lerp);
-    }
-    else
-    {
+    } else {
         if(_sprite.horizontal_flip()) {
             _camera.value().set_x(_camera.value().x()+ (_pos.x() - 30-_camera.value().x() + _dx*8) /lerp);
         } else {
@@ -401,23 +373,16 @@ void Player::update_position(bn::affine_bg_ptr map, fe::Level level) {
     _dy+= gravity;
 
     // take input
-    if(bn::keypad::left_held() && !_listening)
-    {
+    if(bn::keypad::left_held() && !_listening) {
         move_left();
-    }
-    else if(bn::keypad::right_held() && !_listening)
-    {
+    } else if(bn::keypad::right_held() && !_listening) {
         move_right();
-    }
-    else if(_running) //slide to a stop
-    {
+    } else if(_running) { //slide to a stop
         if(!_falling & !_jumping) {
             _sliding = true;
             _running = false;
         }
-    }
-    else if (_sliding) //stop sliding
-    {
+    } else if (_sliding) { //stop sliding
         if (bn::abs(_dx) < 0.1 || _running) {
             _sliding = false;
         }
@@ -430,20 +395,17 @@ void Player::update_position(bn::affine_bg_ptr map, fe::Level level) {
     }
 
     // jump
-    if(bn::keypad::a_pressed() && !_listening)
-    {
+    if(bn::keypad::a_pressed() && !_listening) {
         jump(map, level);
     }
 
     // attack
-    if(bn::keypad::b_pressed() && !_listening)
-    {
+    if(bn::keypad::b_pressed() && !_listening) {
         attack();
     }
 
     // teleport
-    if(bn::keypad::l_pressed() && !_listening)
-    {
+    if(bn::keypad::l_pressed() && !_listening) {
         if(_can_teleport) {
             // BN_LOG(_tele_sprite.position().x());
             _tele_sprite.set_position(_pos);

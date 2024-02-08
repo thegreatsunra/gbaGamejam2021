@@ -16,11 +16,9 @@
 
 #include "bn_sprite_items_bowser_sprite.h"
 
-namespace fe
-{
-class Player
-{
-private:
+namespace fe {
+class Player {
+  private:
     bn::sprite_ptr _sprite;
     bn::sprite_ptr _tele_sprite;
     bn::fixed _dx;
@@ -63,7 +61,7 @@ private:
     bn::optional<bn::sprite_animate_action<4>> _spin_action;
     void _update_camera(int lerp);
 
-public:
+  public:
     Player(bn::sprite_ptr sprite);
 
     void hide();

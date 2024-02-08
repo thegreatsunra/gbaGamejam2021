@@ -21,31 +21,25 @@
 
 #include "bn_sound_items.h"
 
-namespace fe
-{
+namespace fe {
 enum directions {up, down, left, right};
 
-[[nodiscard]] int _get_map_cell(bn::fixed x, bn::fixed y, bn::affine_bg_ptr& map, bn::span<const bn::affine_bg_map_cell> cells)
-{
+[[nodiscard]] int _get_map_cell(bn::fixed x, bn::fixed y, bn::affine_bg_ptr& map, bn::span<const bn::affine_bg_map_cell> cells) {
     int map_size = map.dimensions().width();
     int cell =  modulo((y.safe_division(8).right_shift_integer() * map_size/8 + x/8), map_size*8).integer();
     return cells.at(cell);
 }
 
-[[nodiscard]] bool _contains_cell(int tile, bn::vector<int, 32> tiles)
-{
-    for(int index = 0; index < tiles.size(); ++index)
-    {
-        if(tiles.at(index) == tile)
-        {
+[[nodiscard]] bool _contains_cell(int tile, bn::vector<int, 32> tiles) {
+    for(int index = 0; index < tiles.size(); ++index) {
+        if(tiles.at(index) == tile) {
             return true;
         }
     }
     return false;
 }
 
-[[nodiscard]] bool _check_collisions_map(bn::fixed_point pos, Hitbox hitbox, directions direction, bn::affine_bg_ptr& map, fe::Level level, bn::span<const bn::affine_bg_map_cell> cells)
-{
+[[nodiscard]] bool _check_collisions_map(bn::fixed_point pos, Hitbox hitbox, directions direction, bn::affine_bg_ptr& map, fe::Level level, bn::span<const bn::affine_bg_map_cell> cells) {
 
     bn::fixed l = pos.x() - hitbox.width() / 2 + hitbox.x();
     bn::fixed r = pos.x() + hitbox.width() / 2 + hitbox.x();
@@ -88,15 +82,13 @@ int sleep_timer = 0;
 bn::random random = bn::random();
 
 Enemy::Enemy(int x, int y, bn::camera_ptr camera, bn::affine_bg_ptr map, ENEMY_TYPE type, int hp) :
-    _pos(x, y), _camera(camera), _type(type), _hp(hp), _map(map), _level(Level(map))
-{
+    _pos(x, y), _camera(camera), _type(type), _hp(hp), _map(map), _level(Level(map)) {
     _map_cells = map.map().cells_ref().value();
     _dir = 1;
 
     boss_tele_timer = 0;
 
-    if(_type == ENEMY_TYPE::BAT)
-    {
+    if(_type == ENEMY_TYPE::BAT) {
         _sprite = bn::sprite_items::bat_sprite.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(1);
@@ -114,29 +106,25 @@ Enemy::Enemy(int x, int y, bn::camera_ptr camera, bn::affine_bg_ptr map, ENEMY_T
         _sprite.value().set_bg_priority(1);
         _action = bn::create_sprite_animate_action_forever(
                       _sprite.value(), 20, bn::sprite_items::mario_sprite_2.tiles_item(), 0,1,0,1);
-    }
-    else if (_type == ENEMY_TYPE::WALL) {
+    } else if (_type == ENEMY_TYPE::WALL) {
         _sprite = bn::sprite_items::wall.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(1);
         _action = bn::create_sprite_animate_action_forever(
                       _sprite.value(), 20, bn::sprite_items::wall.tiles_item(), 0,1,0,1);
-    }
-    else if (_type == ENEMY_TYPE::BOSS) {
+    } else if (_type == ENEMY_TYPE::BOSS) {
         _sprite = bn::sprite_items::child.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(1);
         _action = bn::create_sprite_animate_action_forever(
                       _sprite.value(), 20, bn::sprite_items::child.tiles_item(), 1,2,3,4);
-    }
-    else if (_type == ENEMY_TYPE::RAT) {
+    } else if (_type == ENEMY_TYPE::RAT) {
         _sprite = bn::sprite_items::rat.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(1);
         _action = bn::create_sprite_animate_action_forever(
                       _sprite.value(), 20, bn::sprite_items::rat.tiles_item(), 0,1,2,3);
-    }
-    else if (_type == ENEMY_TYPE::MUTANT) {
+    } else if (_type == ENEMY_TYPE::MUTANT) {
         _sprite = bn::sprite_items::mutant.create_sprite(_pos.x(), _pos.y());
         _sprite.value().set_camera(_camera);
         _sprite.value().set_bg_priority(0);
@@ -230,8 +218,7 @@ void Enemy::teleport() {
 }
 
 bool Enemy::_take_damage(int damage) {
-    if(!_invulnerable || (_type == ENEMY_TYPE::MUTANT && !is_tired))
-    {
+    if(!_invulnerable || (_type == ENEMY_TYPE::MUTANT && !is_tired)) {
         _hp -= damage;
         _invulnerable = true;
         if(_type == ENEMY_TYPE::MUTANT) {
@@ -244,29 +231,19 @@ bool Enemy::_take_damage(int damage) {
             if(_type == ENEMY_TYPE::MARIO) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::mario_sprite.tiles_item(), 2,3,3,3);
-            }
-            else if (_type == ENEMY_TYPE::SLIMEO)
-            {
+            } else if (_type == ENEMY_TYPE::SLIMEO) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::mario_sprite_2.tiles_item(), 2,3,3,3);
-            }
-            else if (_type == ENEMY_TYPE::BAT)
-            {
+            } else if (_type == ENEMY_TYPE::BAT) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::bat_sprite.tiles_item(), 2,3,3,3);
-            }
-            else if (_type == ENEMY_TYPE::BOSS)
-            {
+            } else if (_type == ENEMY_TYPE::BOSS) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::child.tiles_item(), 5,6,7,8);
-            }
-            else if (_type == ENEMY_TYPE::WALL)
-            {
+            } else if (_type == ENEMY_TYPE::WALL) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 5, bn::sprite_items::wall.tiles_item(), 2,2,3,3);
-            }
-            else if (_type == ENEMY_TYPE::RAT)
-            {
+            } else if (_type == ENEMY_TYPE::RAT) {
                 _action = bn::create_sprite_animate_action_once(
                               _sprite.value(), 10, bn::sprite_items::rat.tiles_item(), 4,5,6,7);
             }
@@ -277,8 +254,7 @@ bool Enemy::_take_damage(int damage) {
     return false;
 }
 
-bool Enemy::is_hit(Hitbox attack)
-{
+bool Enemy::is_hit(Hitbox attack) {
     if(!_dead) {
         if(_type == ENEMY_TYPE::BOSS) {
             return check_collisions_bb(attack, _pos.x(), _pos.y(), 8, 16);
@@ -293,8 +269,7 @@ bool Enemy::is_hit(Hitbox attack)
     }
 }
 
-bool Enemy::_will_hit_wall()
-{
+bool Enemy::_will_hit_wall() {
 
     if(_check_collisions_map(_pos, Hitbox(-4, 0, 12, 12), directions::left, _map, _level, _map_cells)) {
         return true;
@@ -306,8 +281,7 @@ bool Enemy::_will_hit_wall()
 }
 
 //boss for teleporting
-bool Enemy::_fall_check(bn::fixed x, bn::fixed y)
-{
+bool Enemy::_fall_check(bn::fixed x, bn::fixed y) {
     if(_check_collisions_map(bn::fixed_point(x, y), Hitbox(0,16,4,9), directions::down, _map, _level, _map_cells)) {
         return true;
     } else {
@@ -375,10 +349,8 @@ ENEMY_TYPE Enemy::type() {
 }
 
 void Enemy::update( bn::fixed_point player_pos) {
-    if(!_dead)
-    {
-        if(!_sprite.value().visible())
-        {
+    if(!_dead) {
+        if(!_sprite.value().visible()) {
             _sprite.value().set_visible(true);
         }
 
@@ -397,8 +369,7 @@ void Enemy::update( bn::fixed_point player_pos) {
         }
 
         //apply gravity
-        if(_type != ENEMY_TYPE::BAT)
-        {
+        if(_type != ENEMY_TYPE::BAT) {
             _dy += gravity;
         }
 
@@ -410,9 +381,7 @@ void Enemy::update( bn::fixed_point player_pos) {
                     _spotted_player = true;
                     bn::sound_items::eek.play(1);
                 }
-            }
-            else //right
-            {
+            } else { //right
                 if(check_collisions_bb(Hitbox(_pos.x() +40, _pos.y(), 80, 8), player_pos.x(), player_pos.y(), 16,8)) {
                     _spotted_player = true;
                     bn::sound_items::eek.play(1);
@@ -528,8 +497,7 @@ void Enemy::update( bn::fixed_point player_pos) {
                 }
             }
 
-        }
-        else if(_type == ENEMY_TYPE::BAT) {
+        } else if(_type == ENEMY_TYPE::BAT) {
             if(_direction_timer > 60) {
                 if(_will_hit_wall()) {
                     _dx = 0;

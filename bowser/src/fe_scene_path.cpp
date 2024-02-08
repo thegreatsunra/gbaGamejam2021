@@ -34,13 +34,11 @@
 // #include "bn_music_items.h"
 // #include "bn_music_actions.h"
 
-namespace fe
-{
+namespace fe {
 Path::Path(Player& player)
     : _player(&player) {}
 
-Scene Path::execute(bn::fixed_point spawn_lobowserion)
-{
+Scene Path::execute(bn::fixed_point spawn_lobowserion) {
     bn::camera_ptr camera = bn::camera_ptr::create(spawn_lobowserion.x(), spawn_lobowserion.y());
 
     // bn::music_items::piana.play();
@@ -70,8 +68,7 @@ Scene Path::execute(bn::fixed_point spawn_lobowserion)
 
     // player
     _player->spawn(spawn_lobowserion, camera, map, enemies);
-    while(true)
-    {
+    while(true) {
 
         // max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
         // --counter;

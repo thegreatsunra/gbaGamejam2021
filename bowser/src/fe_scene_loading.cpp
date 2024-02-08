@@ -28,10 +28,8 @@
 
 #include "bn_music_items.h"
 
-namespace fe
-{
-void Loading::execute(Scene next_scene)
-{
+namespace fe {
+void Loading::execute(Scene next_scene) {
     bn::fixed_point init_pos = bn::fixed_point(0, 0);
 
     if(next_scene == Scene::OTHER) {
@@ -97,8 +95,7 @@ void Loading::execute(Scene next_scene)
     bowser_sprite5.set_camera(camera);
     map.set_camera(camera);
 
-    for(int i = 0; i < 160; ++i)
-    {
+    for(int i = 0; i < 160; ++i) {
         if(next_scene != Scene::OTHER) {
             bowser_sprite1.set_x(bowser_sprite1.x() + 1.3);
             bowser_sprite2.set_x(bowser_sprite2.x() + 2);

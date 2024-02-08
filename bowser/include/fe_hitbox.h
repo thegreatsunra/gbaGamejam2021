@@ -4,16 +4,14 @@
 #include "bn_fixed.h"
 #include "bn_fixed_point.h"
 
-namespace fe
-{
-class Hitbox
-{
-private:
+namespace fe {
+class Hitbox {
+  private:
     bn::fixed_point _pos;
     bn::fixed _width;
     bn::fixed _height;
 
-public:
+  public:
     Hitbox();
     Hitbox(bn::fixed x, bn::fixed y, bn::fixed width, bn::fixed height);
 

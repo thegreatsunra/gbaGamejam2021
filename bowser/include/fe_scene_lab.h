@@ -5,13 +5,11 @@
 #include "fe_player.h"
 #include "bn_fixed_point.h"
 
-namespace fe
-{
-class Lab
-{
-private:
+namespace fe {
+class Lab {
+  private:
     Player* _player;
-public:
+  public:
     Lab(Player& player);
     Scene execute( bn::fixed_point spawn);
 };

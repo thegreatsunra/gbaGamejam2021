@@ -7,10 +7,8 @@
 #include "bn_log.h"
 #include "bn_string.h"
 
-namespace fe
-{
-Level::Level(bn::affine_bg_ptr bg)
-{
+namespace fe {
+Level::Level(bn::affine_bg_ptr bg) {
     bool processed_map = false;
     int index = 0;
     int empties = 0;
@@ -19,8 +17,7 @@ Level::Level(bn::affine_bg_ptr bg)
     _ceil_tiles = {};
     bn::span<const bn::affine_bg_map_cell> cells = bg.map().cells_ref().value();
 
-    while (!processed_map)
-    {
+    while (!processed_map) {
         if(cells.at(index) == 0) {
             ++empties;
             if(empties > 2) {
